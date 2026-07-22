@@ -57,3 +57,25 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+Architecture : 
+app
+  > core
+    > components
+    > guards
+    > services
+  > features
+    > books
+      books.route.ts
+      books-routing.module.ts
+      > book-page
+      > components
+        > books-component
+        > books-form
+      > models
+      > services
+        > data-access
+  > shared
+    > components
+    > directives
+    > pipes
