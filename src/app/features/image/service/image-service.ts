@@ -4,6 +4,8 @@ import { ApiResponse } from '../../../shared/interfaces/apiResponse';
 import { ImageInterface } from '../image.interface';
 import { inject, Injectable } from '@angular/core';
 import { ENVIRONMENT } from '../../../environments/environment';
+import { Pageable } from '../../../shared/interfaces/pageable';
+import { Page } from '../../../shared/interfaces/page';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +21,9 @@ export class ImageService {
 
     return this.http.post<ApiResponse<ImageInterface>>(`${this.baseUrl}/images/upload`, formData);
   }
+
+  // getAllImage(pageable : Pageable) : Observable<ApiResponse<Page<ImageInterface>>>{
+  //   return
+  // }
 }
 
