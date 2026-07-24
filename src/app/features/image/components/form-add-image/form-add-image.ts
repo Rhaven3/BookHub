@@ -29,7 +29,13 @@ export class FormAddImage {
     if (!this.selectedFile) return;
 
     this.service.addImage(this.imageForm.value.name!, this.selectedFile).subscribe({
-      next: (res) => console.log('Uploadé:', res),
+      next: (res) => {
+        console.log('Uploadé:', res);
+        this.imageForm.reset();
+        this.selectedFile = null;
+        res.data.path;
+        this.service.triggerRefresh();
+      },
       error: (err) => console.error('Erreur:', err),
     });
   }
