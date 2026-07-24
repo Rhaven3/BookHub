@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+.auth-field {
+  @apply flex flex-col gap-1.5;
+}
+.auth-label {
+  @apply text-sm font-medium text-[#33473B] tracking-wide;
+}
+.auth-input {
+  @apply w-full rounded-md border border-[#C9BFA6] bg-white/70 px-3.5 py-2.5 text-[#1B2430]
+  placeholder:text-[#8A8270] focus:border-[#B8863B] focus:outline-none
+  focus:ring-2 focus:ring-[#B8863B]/30 transition-colors;
+}
+.auth-input-error {
+  @apply border-red-400 focus:border-red-500 focus:ring-red-500/30;
+}
+.auth-error-text {
+  @apply text-xs text-red-600 mt-1;
+}
+.auth-button {
+  @apply w-full rounded-md bg-[#B8863B] px-4 py-2.5 font-semibold text-[#1B2430]
+  tracking-wide transition-colors hover:bg-[#a5762f]
+  disabled:cursor-not-allowed disabled:opacity-60;
+}
+.auth-alert {
+  @apply rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700;
+}
+.auth-link {
+  @apply text-sm text-[#33473B] underline decoration-[#B8863B]/60 underline-offset-4 hover:text-[#1B2430];
+}
