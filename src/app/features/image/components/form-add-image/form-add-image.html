@@ -1,0 +1,33 @@
+<form [formGroup]="imageForm" (ngSubmit)="onSubmit()" )
+      class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+  <div class="flex flex-col gap-2">
+    <label for="text" class="text-sm font-medium text-gray-700">
+      Nom
+    </label>
+    <input type="text" id="text" formControlName="name"
+      class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
+      placeholder="Saisissez un nom"
+    />
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="file" class="text-sm font-medium text-gray-700">
+      Image
+    </label>
+    <input type="file" id="file" (change)="onFileSelected($event)" accept="image/*"
+      class="block w-full text-sm text-gray-600
+             file:mr-4 file:rounded-lg file:border-0
+             file:bg-blue-600 file:px-4 file:py-2
+             file:text-white file:font-medium
+             file:hover:bg-blue-700 file:cursor-pointer
+             cursor-pointer"
+    />
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="imageForm.invalid || !selectedFile"
+            class="w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700">
+      Valider
+    </button>
+  </div>
+</form>
