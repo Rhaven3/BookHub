@@ -1,0 +1,11 @@
+<div class="author-list">
+  <h1>Authors</h1>
+
+  <div class="authors-grid">
+    @for (author of authors; track author.id) {
+      <div class="author-card">
+        <h2>{{ author.firstName }} {{ author.name }}</h2>
+      </div>
+    }
+  </div>
+</div>
