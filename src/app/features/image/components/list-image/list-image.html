@@ -1,0 +1,21 @@
+<section class="max-w-lg mx-auto mt-10 overflow-hidden rounded-xl bg-white shadow-md">
+  <div class="border-b border-gray-200 px-6 py-4">
+    <h2 class="text-xl font-semibold text-gray-800">
+      Liste des éléments
+    </h2>
+  </div>
+  @for (img of images()?.data?.content; track img.id) {
+    <ul class="divide-y divide-gray-200">
+      <li class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition">
+        <img
+          [src]="getImageUrl(img.path)"
+          alt="{{img.name}}"
+          class="h-14 w-14 rounded-lg object-cover"
+        />
+        <h3 class="text-lg font-medium text-gray-800">
+          {{img.name}}
+        </h3>
+      </li>
+    </ul>
+  }
+</section>
