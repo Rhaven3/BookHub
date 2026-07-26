@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+.app-header {
+  @apply flex items-center justify-between bg-[var(--color-ink)] px-6 py-4 text-[var(--color-parchment)];
+}
+.app-header-brand {
+  @apply text-lg font-semibold tracking-wide text-[var(--color-parchment)];
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.app-header-nav {
+  @apply flex items-center gap-4 text-sm;
+}
+.app-header-user {
+  @apply text-[var(--color-brass)];
+}
+.app-header-link {
+  @apply text-[var(--color-parchment)] hover:text-[var(--color-brass)];
+}
+.app-header-logout {
+  @apply cursor-pointer rounded border border-[var(--color-brass)] px-3 py-1 text-[var(--color-brass)]
+  hover:bg-[var(--color-brass)] hover:text-[var(--color-ink)];
+}

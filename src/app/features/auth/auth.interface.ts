@@ -4,7 +4,6 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-  role: string;
   name: string;
   firstName: string;
   email: string;

@@ -1,1 +1,16 @@
-<p>register-page works!</p>
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="auth-card-spine"></div>
+    <div class="auth-card-body">
+      <p class="auth-eyebrow">BookHub</p>
+      <h1 class="auth-title">Rejoignez la bibliothèque</h1>
+      <p class="auth-subtitle">Créez votre compte pour réserver et emprunter des livres.</p>
+
+      <app-register-form
+        [loading]="isLoading()"
+        [errorMessage]="errorMessage()"
+        (submitForm)="onRegister($event)"
+      />
+    </div>
+  </div>
+</section>

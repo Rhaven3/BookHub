@@ -10,6 +10,8 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  router.navigate(['/auth/login']);
+  // Le queryParams returnUrl permet de garder la route sur laquelle un user a essayé d'accéder
+  // Et dont il devait être connecté pour y accéder pour faire une redirection dessus après login
+  router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
   return false;
 };

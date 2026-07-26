@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.auth-page {
+  @apply flex min-h-[calc(100vh-4rem)] items-center justify-center bg-[var(--color-ink)] px-4 py-12;
+  background-image: radial-gradient(circle at 50% 20%, rgba(184, 134, 59, 0.18), transparent 60%);
+}
+.auth-card {
+  @apply relative flex w-full max-w-md overflow-hidden rounded-xl bg-[var(--color-parchment)] shadow-2xl shadow-black/40;
+}
+.auth-card-spine {
+  @apply w-2 shrink-0 bg-[var(--color-brass)];
+}
+.auth-card-body {
+  @apply flex w-full flex-col gap-2 px-8 py-10;
+}
+.auth-eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-brass)];
+}
+.auth-title {
+  @apply text-2xl font-semibold text-[var(--color-ink)];
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.auth-subtitle {
+  @apply mb-4 text-sm text-[var(--color-slate)];
+}
