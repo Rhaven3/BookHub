@@ -21,12 +21,24 @@ export interface AddressRequest {
 
 export interface AuthResponse {
   accessToken: string;
-  email: string;
-  role: string;
+  user: CurrentUser;
   expiresAt: number;
 }
 
 export interface CurrentUser {
-  email: string;
+  id : number;
+  name: string;
   role: string;
+  firstName: string;
+  email: string;
+  phone: string;
+  gender: string;
+  addressDTO: AddressDTO;
+}
+
+export interface AddressDTO {
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
 }

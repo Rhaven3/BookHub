@@ -3,10 +3,152 @@
 @import 'tailwindcss';
 
 :root {
-  --color-ink: #1b2430;
-  --color-parchment: #f3ecdd;
-  --color-brass: #b8863b;
-  --color-slate: #5b6472;
-  --color-green: #3f6b52;
-  --color-wine: #8c3a3a;
+  --color-primary: #4A3728;          /* brun profond    → titres, header, texte principal */
+  --color-clay: #8B5E3C;             /* argile          → liens, accents, bordures focus */
+  --color-terracotta: #C1622D;       /* terracotta      → CTA principal, succès */
+  --color-terracotta-light: #E0895A; /* terracotta clair → hover, highlights */
+  --color-sand: #EFE3CE;             /* sable pâle      → fonds doux, badges */
+  --color-bg: #FBF6EF;               /* blanc cassé sable → fond de page */
+  --color-on-terracotta: #FFFFFF;    /* texte clair lisible sur fond terracotta */
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  body {
+    @apply bg-[var(--color-bg)] text-[var(--color-primary)] antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-[var(--color-primary)] font-medium;
+  }
+
+  a {
+    @apply text-[var(--color-clay)] hover:underline;
+  }
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+@layer components {
+
+  /* Header / navigation */
+  .app-header {
+    @apply flex items-center justify-between bg-white border-b-2 border-[var(--color-primary)]
+    rounded-t-xl px-5 py-3;
+  }
+
+  .app-header__logo {
+    @apply text-[var(--color-primary)] font-medium text-base;
+  }
+
+  .app-header__nav {
+    @apply flex items-center gap-4;
+  }
+
+  .app-header__nav-link {
+    @apply text-[var(--color-clay)] text-sm hover:underline cursor-pointer;
+  }
+
+  /* Carte générique */
+  .card {
+    @apply bg-white border border-gray-200 rounded-xl p-4 shadow-sm;
+  }
+
+  .card__title {
+    @apply text-[var(--color-clay)] text-xs font-medium mb-1;
+  }
+
+  .card__text {
+    @apply text-[var(--color-primary)] text-sm;
+  }
+
+  /* Section alternée (fond doux) */
+  .section-soft {
+    @apply bg-[var(--color-sand)] rounded-xl p-4;
+  }
+}
+
+/* ==========================================================================
+   Boutons
+   ========================================================================== */
+
+@layer components {
+
+  /* Bouton principal — action clé (Réserver, Emprunter) */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg font-medium text-sm
+    px-5 py-2.5 transition-colors duration-150 cursor-pointer
+    bg-[var(--color-terracotta)] text-[var(--color-on-terracotta)] hover:bg-[var(--color-terracotta-light)];
+  }
+
+  /* Bouton secondaire — outline argile */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg font-medium text-sm
+    px-5 py-2.5 transition-colors duration-150 cursor-pointer
+    bg-white text-[var(--color-primary)] border border-[var(--color-clay)] hover:bg-[var(--color-sand)];
+  }
+
+  /* Bouton tertiaire / lien */
+  .btn-link {
+    @apply inline-flex items-center justify-center font-medium text-sm
+    transition-colors duration-150 cursor-pointer
+    bg-transparent text-[var(--color-clay)] underline px-0 py-0 hover:text-[var(--color-primary)];
+  }
+}
+
+/* ==========================================================================
+   Badges & indicateurs
+   ========================================================================== */
+
+@layer components {
+
+  /* Badge doux — fond sable, texte brun profond */
+  .badge-soft {
+    @apply inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-full
+    bg-[var(--color-sand)] text-[var(--color-primary)];
+  }
+
+  /* Badge sur fond vif */
+  .badge-dark {
+    @apply inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-full
+    bg-[var(--color-terracotta)] text-[var(--color-on-terracotta)];
+  }
+
+  /* Badge info (argile) */
+  .badge-info {
+    @apply inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-full
+    bg-[var(--color-clay)] text-white;
+  }
+
+  /* Point de statut (ex: "En ligne", "Nouveau") */
+  .status-dot--success {
+    @apply inline-block w-2 h-2 rounded-full mr-1.5 bg-[var(--color-terracotta)];
+  }
+
+  .status-dot--new {
+    @apply inline-block w-2 h-2 rounded-full mr-1.5 bg-[var(--color-terracotta-light)];
+  }
+}
+
+/* ==========================================================================
+   Formulaires
+   ========================================================================== */
+
+@layer components {
+
+  .form-label {
+    @apply block text-xs text-gray-500 mb-1;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    @apply w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-[var(--color-primary)]
+    focus:outline-none focus:border-[var(--color-clay)] focus:ring-1 focus:ring-[var(--color-clay)];
+  }
 }

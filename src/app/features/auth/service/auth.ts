@@ -107,7 +107,7 @@ export class Auth {
   /** Met à jour l'état interne (token, user) et planifie le prochain refresh */
   private setSession(response: AuthResponse): void {
     this.tokenSignal.set(response.accessToken);
-    this.userSignal.set({ email: response.email, role: response.role });
+    this.userSignal.set({ ...response.user, id: response.user.id });
     this.scheduleRefresh(response.expiresAt);
   }
 

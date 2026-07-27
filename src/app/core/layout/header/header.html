@@ -3,7 +3,7 @@
 
   <nav class="app-header-nav">
     @if (isAuthenticated()) {
-      <span class="app-header-user">{{ user()?.email }}</span>
+      <span class="app-header-user">{{ user()?.firstName }} {{ user()?.name }}</span>
       <button type="button" class="app-header-logout" (click)="logout()">Déconnexion</button>
     } @else {
       <a routerLink="/auth/login" class="app-header-link">Connexion</a>
