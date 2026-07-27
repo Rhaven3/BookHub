@@ -1,0 +1,157 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5" novalidate>
+  @if (errorMessage) {
+    <p class="auth-alert">{{ errorMessage }}</p>
+  }
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="auth-field">
+      <label class="auth-label" for="firstName">Prénom</label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        class="auth-input"
+        [class.auth-input-error]="firstName?.invalid && firstName?.touched"
+        autocomplete="given-name"
+      />
+      @if (firstName?.invalid && firstName?.touched) {
+        <span class="auth-error-text">Le prénom est requis.</span>
+      }
+    </div>
+
+    <div class="auth-field">
+      <label class="auth-label" for="name">Nom</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="auth-input"
+        [class.auth-input-error]="name?.invalid && name?.touched"
+        autocomplete="family-name"
+      />
+      @if (name?.invalid && name?.touched) {
+        <span class="auth-error-text">Le nom est requis.</span>
+      }
+    </div>
+  </div>
+
+  <div class="auth-field">
+    <label class="auth-label" for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      class="auth-input"
+      [class.auth-input-error]="email?.invalid && email?.touched"
+      placeholder="vous@exemple.com"
+      autocomplete="email"
+    />
+    @if (email?.invalid && email?.touched) {
+      <span class="auth-error-text">Entrez une adresse email valide.</span>
+    }
+  </div>
+
+  <div class="auth-field">
+    <label class="auth-label" for="password">Mot de passe</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      class="auth-input"
+      [class.auth-input-error]="password?.invalid && password?.touched"
+      placeholder="••••••••"
+      autocomplete="new-password"
+    />
+    @if (password?.invalid && password?.touched) {
+      <span class="auth-error-text">8 caractères minimum.</span>
+    }
+  </div>
+
+  <div class="auth-field">
+    <label class="auth-label" for="phone">Téléphone</label>
+    <input
+      id="phone"
+      type="tel"
+      formControlName="phone"
+      class="auth-input"
+      [class.auth-input-error]="phone?.invalid && phone?.touched"
+      autocomplete="tel"
+    />
+    @if (phone?.invalid && phone?.touched) {
+      <span class="auth-error-text">Le téléphone est requis.</span>
+    }
+  </div>
+
+  <div formGroupName="address" class="flex flex-col gap-4">
+    <div class="auth-field">
+      <label class="auth-label" for="street">Adresse</label>
+      <input
+        id="street"
+        type="text"
+        formControlName="street"
+        class="auth-input"
+        [class.auth-input-error]="street?.invalid && street?.touched"
+        autocomplete="street-address"
+      />
+      @if (street?.invalid && street?.touched) {
+        <span class="auth-error-text">L'adresse est requise.</span>
+      }
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="auth-field">
+        <label class="auth-label" for="postalCode">Code postal</label>
+        <input
+          id="postalCode"
+          type="text"
+          formControlName="postalCode"
+          class="auth-input"
+          [class.auth-input-error]="postalCode?.invalid && postalCode?.touched"
+          autocomplete="postal-code"
+        />
+        @if (postalCode?.invalid && postalCode?.touched) {
+          <span class="auth-error-text">Requis.</span>
+        }
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label" for="city">Ville</label>
+        <input
+          id="city"
+          type="text"
+          formControlName="city"
+          class="auth-input"
+          [class.auth-input-error]="city?.invalid && city?.touched"
+          autocomplete="address-level2"
+        />
+        @if (city?.invalid && city?.touched) {
+          <span class="auth-error-text">Requis.</span>
+        }
+      </div>
+    </div>
+
+    <div class="auth-field">
+      <label class="auth-label" for="country">Pays</label>
+      <input
+        id="country"
+        type="text"
+        formControlName="country"
+        class="auth-input"
+        [class.auth-input-error]="country?.invalid && country?.touched"
+        autocomplete="country-name"
+      />
+      @if (country?.invalid && country?.touched) {
+        <span class="auth-error-text">Le pays est requis.</span>
+      }
+    </div>
+  </div>
+
+  <button type="submit" class="auth-button" [disabled]="loading">
+    {{ loading ? 'Création...' : 'Créer mon compte' }}
+  </button>
+
+  <p class="text-center text-sm text-[var(--color-slate)]">
+    Déjà un compte ?
+    <a routerLink="/auth/login" class="auth-link">Se connecter</a>
+  </p>
+</form>

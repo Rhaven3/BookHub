@@ -1,0 +1,16 @@
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="auth-card-spine"></div>
+    <div class="auth-card-body">
+      <p class="auth-eyebrow">BookHub</p>
+      <h1 class="auth-title">Bon retour parmi nous</h1>
+      <p class="auth-subtitle">Connectez-vous pour retrouver vos emprunts et réservations.</p>
+
+      <app-login-form
+        [loading]="isLoading()"
+        [errorMessage]="errorMessage()"
+        (submitForm)="onLogin($event)"
+      />
+    </div>
+  </div>
+</section>

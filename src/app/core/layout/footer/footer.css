@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.app-footer {
+  @apply flex items-center justify-between bg-[var(--color-ink)] px-6 py-3 text-xs text-[var(--color-parchment)]/70;
+}
+.app-footer-brand {
+  @apply font-semibold tracking-wide text-[var(--color-brass)];
+  font-family: 'Playfair Display', Georgia, serif;
+}
