@@ -18,7 +18,7 @@
 
 @layer base {
   body {
-    @apply bg-[var(--color-bg)] text-[var(--color-primary)] antialiased;
+    @apply  bg-[var(--color-bg)] text-[var(--color-primary)] antialiased;
   }
 
   h1, h2, h3, h4 {
