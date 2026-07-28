@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+.auth-field {
+  @apply flex flex-col gap-1.5;
+}
+.auth-label {
+  @apply text-sm font-medium text-[var(--color-slate)] tracking-wide;
+}
+.auth-input {
+  @apply w-full rounded-md border border-[#C9BFA6] bg-white/70 px-3.5 py-2.5 text-[var(--color-ink)]
+  placeholder:text-[#8A8270] focus:border-[var(--color-brass)] focus:outline-none
+  focus:ring-2 focus:ring-[var(--color-brass)]/30 transition-colors;
+}
+.auth-input-error {
+  @apply border-[var(--color-wine)] focus:border-[var(--color-wine)] focus:ring-[var(--color-wine)]/30;
+}
+.auth-error-text {
+  @apply text-xs text-[var(--color-wine)] mt-1;
+}
+.auth-button {
+  @apply w-full rounded-md bg-[var(--color-brass)] px-4 py-2.5 font-semibold text-[var(--color-ink)]
+  tracking-wide transition-colors hover:bg-[#a5762f]
+  disabled:cursor-not-allowed disabled:opacity-60;
+}
+.auth-alert {
+  @apply rounded-md border border-[var(--color-wine)]/30 bg-[var(--color-wine)]/10 px-3 py-2 text-sm text-[var(--color-wine)];
+}
+.auth-link {
+  @apply text-sm text-[var(--color-slate)] underline decoration-[var(--color-brass)]/60 underline-offset-4 hover:text-[var(--color-ink)];
+}

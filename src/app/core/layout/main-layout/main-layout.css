@@ -1,0 +1,7 @@
+.page-shell {
+  @apply flex flex-col min-h-screen;
+}
+.page-content {
+  @apply flex-1;
+  min-height: 85vh;
+}
