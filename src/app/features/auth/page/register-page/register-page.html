@@ -7,7 +7,7 @@
       <p class="auth-subtitle">Créez votre compte pour réserver et emprunter des livres.</p>
 
       <app-register-form
-        [loading]="isLoading()"
+        [loading]="loading()"
         [errorMessage]="errorMessage()"
         (submitForm)="onRegister($event)"
       />

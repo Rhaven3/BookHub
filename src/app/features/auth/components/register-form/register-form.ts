@@ -1,37 +1,39 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { RegisterRequest } from '../../auth.interface';
+import { FormInput } from '../../../../shared/components/form-input/form-input';
+import { AddressAutocomplete } from '../../../../shared/components/address-autocomplete/address-autocomplete';
+import { AddressSuggestion } from '../../../../shared/interfaces/address-suggestion.interface';
 
 @Component({
   selector: 'app-register-form',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, FormInput, AddressAutocomplete],
   templateUrl: './register-form.html',
   styleUrl: './register-form.css',
 })
 export class RegisterForm {
-  @Input() loading = false;
-  @Input() errorMessage: string | null = null;
-  @Output() submitForm = new EventEmitter<RegisterRequest>();
+  loading = input(false);
+  errorMessage = input<string | null>(null);
+  submitForm = output<RegisterRequest>();
 
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      lastName: ['', [Validators.required]],
-      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ' -]+$/)]],
+      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ' -]+$/)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      phone: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       address: this.fb.group({
         street: ['', [Validators.required]],
-        city: ['', [Validators.required]],
-        postalCode: ['', [Validators.required]],
-        country: ['', [Validators.required]],
+        city: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ' -]+$/)]],
+        postalCode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
+        country: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ' -]+$/)]],
       }),
     });
   }
-
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -39,32 +41,18 @@ export class RegisterForm {
     }
     this.submitForm.emit(this.form.value as RegisterRequest);
   }
-
-  get lastName() {
-    return this.form.get('lastName');
+  setFieldError(field: string, message: string): void {
+    const control = this.form.get(field);
+    if (control) {
+      control.setErrors({ ...control.errors, serverError: message });
+      control.markAsTouched();
+    }
   }
-  get firstName() {
-    return this.form.get('firstName');
-  }
-  get email() {
-    return this.form.get('email');
-  }
-  get password() {
-    return this.form.get('password');
-  }
-  get phone() {
-    return this.form.get('phone');
-  }
-  get street() {
-    return this.form.get('address.street');
-  }
-  get city() {
-    return this.form.get('address.city');
-  }
-  get postalCode() {
-    return this.form.get('address.postalCode');
-  }
-  get country() {
-    return this.form.get('address.country');
+  onAddressSelected(suggestion: AddressSuggestion): void {
+    this.form.get('address')?.patchValue({
+      city: suggestion.city,
+      postalCode: suggestion.postalCode,
+      country: suggestion.country,
+    });
   }
 }

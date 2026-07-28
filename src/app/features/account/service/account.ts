@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { UpdateProfileRequest } from '../account.interface';
+import { ChangePasswordRequest, UpdateProfileRequest } from '../account.interface';
 import { CurrentUser } from '../../auth/auth.interface';
 import { ApiResponse } from '../../../shared/interfaces/apiResponse'; // adapte le chemin si besoin
 
@@ -17,5 +17,10 @@ export class AccountService {
     return this.http
       .put<ApiResponse<CurrentUser>>(`${this.baseUrl}/update`, request)
       .pipe(map((response) => response.data));
+  }
+  changePassword(request: ChangePasswordRequest): Observable<void> {
+    return this.http
+      .put<void>(`${this.baseUrl}/update/password`, request)
+      .pipe(map(() => undefined));
   }
 }

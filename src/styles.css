@@ -152,3 +152,59 @@
     focus:outline-none focus:border-[var(--color-clay)] focus:ring-1 focus:ring-[var(--color-clay)];
   }
 }
+
+/* ==========================================================================
+   Page Login + Register
+   ========================================================================== */
+
+.auth-page {
+  @apply flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12;
+}
+.auth-card {
+  @apply relative flex w-full max-w-md overflow-hidden rounded-xl bg-white border border-gray-200 shadow-lg;
+}
+.auth-card-spine {
+  @apply w-2 shrink-0 bg-[var(--color-terracotta)];
+}
+.auth-card-body {
+  @apply flex w-full flex-col gap-2 px-8 py-10;
+}
+.auth-eyebrow {
+  @apply text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-terracotta)];
+}
+.auth-title {
+  @apply text-2xl font-semibold text-[var(--color-primary)];
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.auth-subtitle {
+  @apply mb-4 italic text-sm text-gray-600;
+}
+/* ==========================================================================
+  Formulaires
+   ========================================================================== */
+.form-container{
+  @apply flex flex-col gap-2
+}
+.form-alert {
+  @apply text-sm rounded-lg px-4 py-3 mb-2;
+  background: #fdf1ee;
+  color: #B3311F;
+}
+
+.form-field {
+  @apply flex flex-col gap-1;
+}
+
+
+.form-input-error {
+  @apply border-red-400;
+}
+
+.form-label {
+  @apply text-sm font-medium text-[var(--color-clay)] tracking-wide ;
+}
+.form-error-text {
+  @apply text-xs block;
+  min-height: 1rem; /* réserve la place même si vide */
+  color: #B3311F;
+}

@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LoginRequest } from '../../auth.interface';
+import { FormInput } from '../../../../shared/components/form-input/form-input';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, FormInput],
   templateUrl: './login-form.html',
   styleUrl: './login-form.css',
 })

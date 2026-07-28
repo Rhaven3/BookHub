@@ -1,0 +1,21 @@
+<div class="form-field">
+  @if (label) {
+    <label class="form-label" [attr.for]="label">{{ label }}</label>
+  }
+  <input
+    [id]="label"
+    [type]="type"
+    [placeholder]="placeholder"
+    [autocomplete]="autocomplete"
+    [value]="value"
+    [disabled]="disabled"
+    [attr.maxlength]="maxLength"
+    class="form-input"
+    [class.form-input-error]="invalid"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+
+    <span class="form-error-text">@if (invalid && errorMessage) {{{ errorMessage }} }</span>
+
+</div>

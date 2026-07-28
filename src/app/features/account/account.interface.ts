@@ -8,4 +8,9 @@ export interface UpdateProfileRequest {
   address: AddressRequest;
 }
 
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
 

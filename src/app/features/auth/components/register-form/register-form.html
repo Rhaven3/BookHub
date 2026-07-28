@@ -1,155 +1,78 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5" novalidate>
-  @if (errorMessage) {
-    <p class="auth-alert">{{ errorMessage }}</p>
-  }
-  <div class="grid grid-cols-2 gap-4">
-    <div class="auth-field">
-      <label class="auth-label" for="firstName">Prénom</label>
-      <input
-        id="firstName"
-        type="text"
-        formControlName="firstName"
-        class="auth-input"
-        [class.auth-input-error]="firstName?.invalid && firstName?.touched"
-        autocomplete="given-name"
-      />
-      @if (firstName?.invalid && firstName?.touched) {
-        <span class="auth-error-text">Le prénom est requis.</span>
-      }
-    </div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container" novalidate>
 
-    <div class="auth-field">
-      <label class="auth-label" for="lastName">Nom</label>
-      <input
-        id="lastName"
-        type="text"
-        formControlName="lastName"
-        class="auth-input"
-        [class.auth-input-error]="lastName?.invalid && lastName?.touched"
-        autocomplete="family-name"
-      />
-      @if (lastName?.invalid && lastName?.touched) {
-        <span class="auth-error-text">Le nom est requis.</span>
-      }
-    </div>
-  </div>
-
-  <div class="auth-field">
-    <label class="auth-label" for="email">Email</label>
-    <input
-      id="email"
-      type="email"
-      formControlName="email"
-      class="auth-input"
-      [class.auth-input-error]="email?.invalid && email?.touched"
-      placeholder="vous@exemple.com"
-      autocomplete="email"
+<div class="grid grid-cols-2 gap-4">
+    <app-form-input
+      formControlName="firstName"
+      label="Prénom"
+      filter="letters"
+      autocomplete="given-name"
+      requiredMessage="Le prénom est requis."
+      patternMessage="Le prénom ne doit contenir que des lettres."
     />
-    @if (email?.invalid && email?.touched) {
-      <span class="auth-error-text">Entrez une adresse email valide.</span>
-    }
-  </div>
-
-  <div class="auth-field">
-    <label class="auth-label" for="password">Mot de passe</label>
-    <input
-      id="password"
-      type="password"
-      formControlName="password"
-      class="auth-input"
-      [class.auth-input-error]="password?.invalid && password?.touched"
-      placeholder="••••••••"
-      autocomplete="new-password"
+    <app-form-input
+      formControlName="lastName"
+      label="Nom"
+      filter="letters"
+      autocomplete="family-name"
+      requiredMessage="Le nom est requis."
+      patternMessage="Le nom ne doit contenir que des lettres."
     />
-    @if (password?.invalid && password?.touched) {
-      <span class="auth-error-text">8 caractères minimum.</span>
-    }
   </div>
 
-  <div class="auth-field">
-    <label class="auth-label" for="phone">Téléphone</label>
-    <input
-      id="phone"
-      type="tel"
-      formControlName="phone"
-      class="auth-input"
-      [class.auth-input-error]="phone?.invalid && phone?.touched"
-      autocomplete="tel"
+  <app-form-input
+    formControlName="email"
+    label="Email"
+    type="email"
+    placeholder="vous@exemple.com"
+    autocomplete="email"
+    requiredMessage="L'email est requis."
+    patternMessage="Entrez une adresse email valide."
+  />
+
+  <app-form-input
+    formControlName="password"
+    label="Mot de passe"
+    type="password"
+    placeholder="••••••••"
+    autocomplete="new-password"
+    requiredMessage="Le mot de passe est requis."
+    patternMessage="6 caractères minimum."
+  />
+
+  <app-form-input
+    formControlName="phone"
+    label="Téléphone"
+    type="tel"
+    filter="numbers"
+    autocomplete="tel"
+    [maxLength]="10"
+    requiredMessage="Le téléphone est requis."
+    patternMessage="Le téléphone doit contenir exactement 10 chiffres."
+  />
+
+  <div formGroupName="address" class="form-container">
+    <app-address-autocomplete
+      formControlName="street"
+      label="Adresse"
+      requiredMessage="L'adresse est requise."
+      (addressSelected)="onAddressSelected($event)"
     />
-    @if (phone?.invalid && phone?.touched) {
-      <span class="auth-error-text">Le téléphone est requis.</span>
-    }
-  </div>
-
-  <div formGroupName="address" class="flex flex-col gap-4">
-    <div class="auth-field">
-      <label class="auth-label" for="street">Adresse</label>
-      <input
-        id="street"
-        type="text"
-        formControlName="street"
-        class="auth-input"
-        [class.auth-input-error]="street?.invalid && street?.touched"
-        autocomplete="street-address"
-      />
-      @if (street?.invalid && street?.touched) {
-        <span class="auth-error-text">L'adresse est requise.</span>
-      }
-    </div>
-
     <div class="grid grid-cols-2 gap-4">
-      <div class="auth-field">
-        <label class="auth-label" for="postalCode">Code postal</label>
-        <input
-          id="postalCode"
-          type="text"
-          formControlName="postalCode"
-          class="auth-input"
-          [class.auth-input-error]="postalCode?.invalid && postalCode?.touched"
-          autocomplete="postal-code"
-        />
-        @if (postalCode?.invalid && postalCode?.touched) {
-          <span class="auth-error-text">Requis.</span>
-        }
-      </div>
-
-      <div class="auth-field">
-        <label class="auth-label" for="city">Ville</label>
-        <input
-          id="city"
-          type="text"
-          formControlName="city"
-          class="auth-input"
-          [class.auth-input-error]="city?.invalid && city?.touched"
-          autocomplete="address-level2"
-        />
-        @if (city?.invalid && city?.touched) {
-          <span class="auth-error-text">Requis.</span>
-        }
-      </div>
+      <app-form-input formControlName="postalCode" label="Code postal" filter="numbers" [maxLength]="5" autocomplete="postal-code"
+                      requiredMessage="Requis." patternMessage="Doit contenir 5 chiffres." />
+      <app-form-input formControlName="city" label="Ville" filter="letters" autocomplete="address-level2"
+                      requiredMessage="Requis." patternMessage="La ville ne doit contenir que des lettres." />
     </div>
 
-    <div class="auth-field">
-      <label class="auth-label" for="country">Pays</label>
-      <input
-        id="country"
-        type="text"
-        formControlName="country"
-        class="auth-input"
-        [class.auth-input-error]="country?.invalid && country?.touched"
-        autocomplete="country-name"
-      />
-      @if (country?.invalid && country?.touched) {
-        <span class="auth-error-text">Le pays est requis.</span>
-      }
-    </div>
+    <app-form-input formControlName="country" label="Pays" filter="letters" autocomplete="country-name"
+                    requiredMessage="Le pays est requis." patternMessage="Le pays ne doit contenir que des lettres." />
   </div>
 
-  <button type="submit" class="auth-button" [disabled]="loading">
-    {{ loading ? 'Création...' : 'Créer mon compte' }}
+  <button type="submit" class="btn-primary" [disabled]="loading()">
+    {{ loading() ? 'Création...' : 'Créer mon compte' }}
   </button>
 
-  <p class="text-center text-sm text-[var(--color-slate)]">
+  <p class="text-center text-sm text-gray-500">
     Déjà un compte ?
     <a routerLink="/auth/login" class="auth-link">Se connecter</a>
   </p>
