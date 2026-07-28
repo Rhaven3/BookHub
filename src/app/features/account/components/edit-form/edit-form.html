@@ -1,0 +1,143 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-5" novalidate>
+
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="form-field">
+      <label class="form-label" for="firstName">Prénom</label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        class="form-input"
+        [class.form-input-error]="firstName?.invalid && firstName?.touched"
+        autocomplete="given-name"
+        (input)="blockNumbers($event)"
+      />
+      @if (firstName?.invalid && firstName?.touched) {
+        <span class="form-error-text">Le prénom est requis.</span>
+      }
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="lastName">Nom</label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        class="form-input"
+        [class.form-input-error]="lastName?.invalid && lastName?.touched"
+        autocomplete="family-name"
+        (input)="blockNumbers($event)"
+      />
+      @if (lastName?.invalid && lastName?.touched) {
+        <span class="form-error-text">Le nom est requis.</span>
+      }
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      class="form-input"
+      [class.form-input-error]="email?.invalid && email?.touched"
+      placeholder="vous@exemple.com"
+      autocomplete="email"
+    />
+    @if (email?.invalid && email?.touched) {
+      @if (email?.errors?.['serverError']) {
+        <span class="form-error-text">{{ email?.errors?.['serverError'] }}</span>
+      } @else {
+        <span class="form-error-text">Entrez une adresse email valide.</span>
+      }
+    }
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="phone">Téléphone</label>
+    <input
+      id="phone"
+      type="tel"
+      formControlName="phone"
+      class="form-input"
+      [class.form-input-error]="phone?.invalid && phone?.touched"
+      autocomplete="tel"
+    />
+    @if (phone?.invalid && phone?.touched) {
+      <span class="form-error-text">Le téléphone est requis.</span>
+    }
+  </div>
+
+  <div formGroupName="address" class="flex flex-col gap-4">
+    <div class="form-field">
+      <label class="form-label" for="street">Adresse</label>
+      <input
+        id="street"
+        type="text"
+        formControlName="street"
+        class="form-input"
+        [class.form-input-error]="street?.invalid && street?.touched"
+        autocomplete="street-address"
+      />
+      @if (street?.invalid && street?.touched) {
+        <span class="form-error-text">L'adresse est requise.</span>
+      }
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="form-field">
+        <label class="form-label" for="postalCode">Code postal</label>
+        <input
+          id="postalCode"
+          type="text"
+          formControlName="postalCode"
+          class="form-input"
+          [class.form-input-error]="postalCode?.invalid && postalCode?.touched"
+          autocomplete="postal-code"
+        />
+        @if (postalCode?.invalid && postalCode?.touched) {
+          <span class="form-error-text">Requis.</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="form-label" for="city">Ville</label>
+        <input
+          id="city"
+          type="text"
+          formControlName="city"
+          class="form-input"
+          [class.form-input-error]="city?.invalid && city?.touched"
+          autocomplete="address-level2"
+        />
+        @if (city?.invalid && city?.touched) {
+          <span class="form-error-text">Requis.</span>
+        }
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="country">Pays</label>
+      <input
+        id="country"
+        type="text"
+        formControlName="country"
+        class="form-input"
+        [class.form-input-error]="country?.invalid && country?.touched"
+        autocomplete="country-name"
+      />
+      @if (country?.invalid && country?.touched) {
+        <span class="form-error-text">Le pays est requis.</span>
+      }
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3 justify-end">
+    <a routerLink="/account/profile" class="btn-secondary">Annuler</a>
+    <button type="submit" class="btn-primary" [disabled]="loading()">
+      {{ loading() ? 'Enregistrement...' : 'Enregistrer les modifications' }}
+    </button>
+  </div>
+</form>

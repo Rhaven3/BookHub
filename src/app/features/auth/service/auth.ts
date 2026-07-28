@@ -104,10 +104,15 @@ export class Auth {
     });
   }
 
+  /** Permet de set les nouvelles informations du user lors d'un EDIT */
+  setUser(user: CurrentUser): void {
+    this.userSignal.set(user);
+  }
+
   /** Met à jour l'état interne (token, user) et planifie le prochain refresh */
   private setSession(response: AuthResponse): void {
     this.tokenSignal.set(response.accessToken);
-    this.userSignal.set({ ...response.user, id: response.user.id });
+    this.userSignal.set({ ...response.user });
     this.scheduleRefresh(response.expiresAt);
   }
 

@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+.profile-page {
+  @apply max-w-3xl mx-auto px-4 py-10 flex flex-col gap-6;
+}
+
+/* ======================
+   HEADER
+====================== */
+
+.profile-header {
+  @apply flex items-center justify-between mb-2;
+}
+
+.profile-title {
+  @apply text-2xl font-semibold;
+  color: var(--color-primary);
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ======================
+   CARD
+====================== */
+
+.profile-card {
+  @apply bg-white border border-gray-200 rounded-xl p-6;
+}
+
+.profile-card-header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.profile-card-title {
+  @apply text-base font-semibold mb-4;
+  color: var(--color-primary);
+}
+
+.profile-card-header .profile-card-title {
+  @apply mb-0;
+}
+
+/* ======================
+   INFOS GRID
+====================== */
+
+.profile-info-grid {
+  @apply grid grid-cols-2 gap-4 mb-4;
+}
+
+.profile-info-item {
+  @apply flex flex-col gap-1;
+}
+
+.profile-info-label {
+  @apply text-xs font-medium uppercase tracking-wide;
+  color: var(--color-clay);
+}
+
+.profile-info-value {
+  @apply text-sm;
+  color: var(--color-primary);
+}
+
+.profile-info-address {
+  @apply flex flex-col gap-1 pt-4 border-t border-gray-100;
+}
+
+/* ======================
+   LISTS (emprunts / réservations)
+====================== */
+
+.profile-list {
+  @apply flex flex-col gap-2;
+}
+
+.profile-list-item {
+  @apply flex items-center justify-between px-4 py-3 rounded-lg;
+  background: var(--color-bg);
+  border: 1px solid #E5DFD3;
+}
+
+.profile-list-item-title {
+  @apply text-sm font-medium hover:underline hover:underline-offset-2;
+  color: var(--color-primary);
+}
+
+.profile-list-item-subtitle {
+  @apply text-xs;
+  color: var(--color-clay);
+}

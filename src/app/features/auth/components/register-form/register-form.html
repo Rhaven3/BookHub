@@ -2,7 +2,6 @@
   @if (errorMessage) {
     <p class="auth-alert">{{ errorMessage }}</p>
   }
-
   <div class="grid grid-cols-2 gap-4">
     <div class="auth-field">
       <label class="auth-label" for="firstName">Prénom</label>
@@ -20,16 +19,16 @@
     </div>
 
     <div class="auth-field">
-      <label class="auth-label" for="name">Nom</label>
+      <label class="auth-label" for="lastName">Nom</label>
       <input
-        id="name"
+        id="lastName"
         type="text"
-        formControlName="name"
+        formControlName="lastName"
         class="auth-input"
-        [class.auth-input-error]="name?.invalid && name?.touched"
+        [class.auth-input-error]="lastName?.invalid && lastName?.touched"
         autocomplete="family-name"
       />
-      @if (name?.invalid && name?.touched) {
+      @if (lastName?.invalid && lastName?.touched) {
         <span class="auth-error-text">Le nom est requis.</span>
       }
     </div>

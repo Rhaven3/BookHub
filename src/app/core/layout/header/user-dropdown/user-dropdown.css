@@ -5,17 +5,16 @@
 }
 
 .userTrigger {
-  @apply flex h-11 items-center gap-2 px-4 cursor-pointer text-sm font-medium;
+  @apply flex h-11 text-white items-center gap-2 px-4 cursor-pointer text-sm font-medium;
 
-  background: var(--color-sand);
+  background: var(--color-primary);
   border: 1px solid #E5DFD3;
   border-radius: 8px;
-  color: var(--color-primary);
   transition: background 150ms ease;
 }
 
 .userTrigger:hover {
-  background: #D9CBB0;
+  background: color-mix(in srgb, var(--color-primary) 80%, white);
 }
 
 .userMenu {

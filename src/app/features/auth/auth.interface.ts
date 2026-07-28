@@ -4,7 +4,7 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-  name: string;
+  lastName: string;
   firstName: string;
   email: string;
   password: string;
@@ -26,13 +26,11 @@ export interface AuthResponse {
 }
 
 export interface CurrentUser {
-  id : number;
-  name: string;
+  lastName: string;
   role: string;
   firstName: string;
   email: string;
   phone: string;
-  gender: string;
   addressDTO: AddressDTO;
 }
 

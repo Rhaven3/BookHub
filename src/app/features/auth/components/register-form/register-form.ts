@@ -18,7 +18,7 @@ export class RegisterForm {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       firstName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -40,8 +40,8 @@ export class RegisterForm {
     this.submitForm.emit(this.form.value as RegisterRequest);
   }
 
-  get name() {
-    return this.form.get('name');
+  get lastName() {
+    return this.form.get('lastName');
   }
   get firstName() {
     return this.form.get('firstName');
