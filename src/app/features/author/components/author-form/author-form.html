@@ -1,5 +1,10 @@
+<h2 class="text-2xl font-semibold mb-6">
+  {{ isEditMode ? 'Edit author' : 'Create author' }}
+</h2>
+
 <form [formGroup]="authorForm" (ngSubmit)="onSubmit()" )
       class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+
   <div class="flex flex-col gap-2">
     <label for="text" class="text-sm font-medium text-gray-700">Prénom</label>
     <input type="text" id="text" formControlName="fname"
@@ -18,9 +23,9 @@
 
 
   <div>
-    <button type="submit" [disabled]="authorForm.invalid"
-            class="w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700">
-      Valider
+    <button type="submit" class="btn-primary" [disabled]="authorForm.invalid">
+      {{ isEditMode ? 'Update' : 'Create' }}
     </button>
+
   </div>
 </form>

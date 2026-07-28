@@ -60,4 +60,19 @@ export class AuthorList {
       error: (err) => console.error(err),
     });
   }
+
+  editAuthor(id: number): void {
+    this.router.navigate(['/author/edit', id]);
+  }
+
+  deleteAuthor(id: number): void {
+    this.service.deleteAuthor(id).subscribe({
+      next: () => {
+        this.service.triggerRefresh();
+      },
+      error: (err) => {
+        console.error('Erreur suppression auteur', err);
+      },
+    });
+  }
 }

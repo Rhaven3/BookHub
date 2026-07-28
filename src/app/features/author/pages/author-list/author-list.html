@@ -16,8 +16,8 @@
       <li class="flex items-center justify-between py-4">
         <div><h3 class="text-lg font-medium">{{ author.fname }} {{ author.lname }}</h3></div>
         <div class="flex gap-2">
-          <button class="btn-secondary">Edit</button>
-          <button class="btn-danger">Delete</button>
+          <button class="btn-secondary" (click)="editAuthor(author.id!)">Edit</button>
+          <button class="btn-danger" (click)="deleteAuthor(author.id!)">Delete</button>
         </div>
       </li>
     } @empty {

@@ -5,4 +5,5 @@ import { AuthorForm } from './components/author-form/author-form';
 export const AUTHOR_ROUTES: Routes = [
   { path: '', component: AuthorList },
   { path: 'create', component: AuthorForm },
+  { path: 'edit/:id', component: AuthorForm, },
 ];

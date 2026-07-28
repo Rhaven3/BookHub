@@ -35,4 +35,16 @@ export class AuthorService {
       `${this.baseUrl}/author/search?name=${name}&page=${pageable.page}&size=${pageable.size}`,
     );
   }
+
+  getAuthorById(id: number): Observable<Author> {
+    return this.http.get<Author>(`${this.baseUrl}/author/${id}`);
+  }
+
+  updateAuthor(id: number, author: Author): Observable<Author> {
+    return this.http.put<Author>(`${this.baseUrl}/author/${id}`, author);
+  }
+
+  deleteAuthor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/author/${id}`);
+  }
 }
