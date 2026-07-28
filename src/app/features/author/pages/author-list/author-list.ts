@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Author } from '../../models/author';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { AuthorService } from '../../services/author';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { combineLatest, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-author-list',
@@ -8,16 +10,39 @@ import { AuthorService } from '../../services/author';
   templateUrl: './author-list.html',
   styleUrl: './author-list.css',
 })
-export class AuthorList implements OnInit {
-  authors: Author[] = [
-    { id: 1, firstName: 'Jules', name: 'Verne' },
-    { id: 2, firstName: 'Victor', name: 'Hugo' },
-  ];
+export class AuthorList {
+  private service = inject(AuthorService);
+  private router = inject(Router);
 
-  constructor(private authorService: AuthorService) {}
+  currentPage = signal(0);
+  pageSize = signal(10);
 
-  ngOnInit(): void {
-    // À réactiver lorsque l'auth JWT sera intégrée
-    //this.authorService.getAuthors().subscribe((data) => {this.authors = data;});
+  constructor() {
+    effect(() => {
+      console.log('AUTHORS RESPONSE :', this.authors());
+    });
+  }
+
+  authors = toSignal(
+    combineLatest([
+      toObservable(this.currentPage),
+      toObservable(this.pageSize),
+      toObservable(this.service.refreshTrigger),
+    ]).pipe(switchMap(([page, size]) => this.service.getAuthors({ page, size }))),
+  );
+
+  displayAuthors = computed(() => this.authors()?.content ?? []);
+
+  goToPage(page: number) {
+    this.currentPage.set(page);
+  }
+
+  changePageSize(size: number) {
+    this.pageSize.set(size);
+    this.currentPage.set(0);
+  }
+
+  createAuthor(): void {
+    this.router.navigate(['/author/create']);
   }
 }

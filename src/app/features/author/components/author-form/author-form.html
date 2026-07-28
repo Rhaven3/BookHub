@@ -1,1 +1,26 @@
-<p>author-form works!</p>
+<form [formGroup]="authorForm" (ngSubmit)="onSubmit()" )
+      class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+  <div class="flex flex-col gap-2">
+    <label for="text" class="text-sm font-medium text-gray-700">Prénom</label>
+    <input type="text" id="text" formControlName="fname"
+           class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
+           placeholder="Saisissez un prénom"
+    />
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="text" class="text-sm font-medium text-gray-700">Nom</label>
+    <input type="text" id="text" formControlName="lname"
+           class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
+           placeholder="Saisissez un nom"
+    />
+  </div>
+
+
+  <div>
+    <button type="submit" [disabled]="authorForm.invalid"
+            class="w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700">
+      Valider
+    </button>
+  </div>
+</form>

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
+import { AuthorList } from './pages/author-list/author-list';
+import { AuthorForm } from './components/author-form/author-form';
 
 export const AUTHOR_ROUTES: Routes = [
-  {
-    path: 'list',
-    loadComponent: () => import('./pages/author-list/author-list').then((c) => c.AuthorList),
-  },
+  { path: '', component: AuthorList },
+  { path: 'create', component: AuthorForm },
 ];
