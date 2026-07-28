@@ -3,10 +3,12 @@ import { AuthorService } from '../../services/author';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { combineLatest, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { Author } from '../../author.interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-author-list',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './author-list.html',
   styleUrl: './author-list.css',
 })
@@ -16,12 +18,7 @@ export class AuthorList {
 
   currentPage = signal(0);
   pageSize = signal(10);
-
-  constructor() {
-    effect(() => {
-      console.log('AUTHORS RESPONSE :', this.authors());
-    });
-  }
+  searchValue = '';
 
   authors = toSignal(
     combineLatest([
@@ -31,7 +28,11 @@ export class AuthorList {
     ]).pipe(switchMap(([page, size]) => this.service.getAuthors({ page, size }))),
   );
 
-  displayAuthors = computed(() => this.authors()?.content ?? []);
+  searchResults = signal<Author[]>([]);
+
+  displayAuthors = computed(() =>
+    this.searchResults().length > 0 ? this.searchResults() : (this.authors()?.content ?? []),
+  );
 
   goToPage(page: number) {
     this.currentPage.set(page);
@@ -44,5 +45,19 @@ export class AuthorList {
 
   createAuthor(): void {
     this.router.navigate(['/author/create']);
+  }
+
+  searchAuthors(name: string): void {
+    if (!name.trim()) {
+      this.searchResults.set([]);
+      return;
+    }
+
+    this.service.search(name, { page: this.currentPage(), size: this.pageSize() }).subscribe({
+      next: (page) => {
+        this.searchResults.set(page.content);
+      },
+      error: (err) => console.error(err),
+    });
   }
 }

@@ -29,4 +29,10 @@ export class AuthorService {
   createAuthor(author: Author): Observable<Author> {
     return this.http.post<Author>(`${this.baseUrl}/author`, author);
   }
+
+  search(name: string, pageable: Pageable): Observable<Page<Author>> {
+    return this.http.get<Page<Author>>(
+      `${this.baseUrl}/author/search?name=${name}&page=${pageable.page}&size=${pageable.size}`,
+    );
+  }
 }

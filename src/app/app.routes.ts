@@ -9,5 +9,5 @@ export const routes: Routes = [
   { path: 'image', component: MainLayout, children: IMAGE_ROUTES, canActivate: [authGuard] },
   { path: 'auth', component: MainLayout, children: AUTH_ROUTES },
   { path: 'author', component: MainLayout, children: AUTHOR_ROUTES, canActivate: [authGuard] },
-  { path: '', redirectTo: '/image', pathMatch: 'full' },
+  { path: '', redirectTo: '/images', pathMatch: 'full' },
 ];
