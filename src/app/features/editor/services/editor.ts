@@ -22,9 +22,9 @@ export class EditorService {
     this.refreshTrigger.update((v) => v + 1);
   }
 
-  getEditors(pageable: Pageable): Observable<ApiResponse<Page<Editor>>> {
-    return this.http.get<ApiResponse<Page<Editor>>>(
-      `${this.baseUrl}/editor?page=${pageable.page}&size=${pageable.size}`,
+  getEditors(pageable: Pageable): Observable<Page<Editor>> {
+    return this.http.get<Page<Editor>>(
+      `${this.baseUrl}/editor?page=${pageable.page}&size=${pageable.size}`
     );
   }
 

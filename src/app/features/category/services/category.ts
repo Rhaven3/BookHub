@@ -22,9 +22,9 @@ export class CategoryService {
     this.refreshTrigger.update((v) => v + 1);
   }
 
-  getCategories(pageable: Pageable): Observable<ApiResponse<Page<Category>>> {
-    return this.http.get<ApiResponse<Page<Category>>>(
-      `${this.baseUrl}/category?page=${pageable.page}&size=${pageable.size}`,
+  getCategories(pageable: Pageable): Observable<Page<Category>> {
+    return this.http.get<Page<Category>>(
+      `${this.baseUrl}/category?page=${pageable.page}&size=${pageable.size}`
     );
   }
 

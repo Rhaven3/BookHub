@@ -55,11 +55,11 @@ export class Catalog {
     });
 
     this.categoryService.getCategories({ page: 0, size: 100 }).subscribe((res) => {
-      this.categories.set(res.data.content);
+      this.categories.set(res.content);
     });
 
     this.editorService.getEditors({ page: 0, size: 100 }).subscribe((res) => {
-      this.editors.set(res.data.content);
+      this.editors.set(res.content);
     });
   }
 
