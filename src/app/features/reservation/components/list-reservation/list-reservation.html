@@ -1,79 +1,87 @@
-<div class="max-w-6xl mx-auto p-6 space-y-5">
-  @for (reservation of reservations(); track reservation.id) {
-    <div
-      class="card flex flex-col md:flex-row items-start md:items-center gap-5 hover:shadow-md transition-shadow">
+@if (reservations()) {
+  <div class="max-w-6xl mx-auto p-6 space-y-5">
+    @for (reservation of reservations(); track reservation.id) {
+      <div
+        class="card flex flex-col md:flex-row items-start md:items-center gap-5 hover:shadow-md transition-shadow">
 
-      <!-- Image -->
-      <div class="w-28 h-40 shrink-0 overflow-hidden rounded-lg border border-gray-200">
-        @if (reservation.book.images && reservation.book.images.length > 0) {
-          <img
-            [src]="getImageUrl(reservation.book.images[0].path)"
-            [alt]="reservation.book.images[0].name"
-            class="w-full h-full object-cover">
-        } @else {
-          <img
-            src="https://placehold.co/200x300"
-            alt="Couverture du livre"
-            class="w-full h-full object-cover">
-        }
-      </div>
-
-      <!-- Informations -->
-      <div class="flex-1 flex flex-col gap-2">
-
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-semibold">{{ reservation.book.title }}</h2>
-            @for (res of reservation.book.authors; track res.id) {
-              <p class="text-sm text-gray-500">
-                {{ res.fname }} {{ res.lname }}
-              </p>
-            }
-            <div class="mt-2 flex items-center gap-2">
-  <span class="text-sm text-gray-500">
-    Statut :
-  </span>
-
-              <span
-                class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
-                [class.bg-[var(--color-sand)]]="reservation.status === 'WAITING'"
-                [class.text-[var(--color-primary)]]="reservation.status === 'WAITING'"
-
-                [class.bg-[var(--color-terracotta)]]="reservation.status === 'AVAILABLE'"
-                [class.text-white]="reservation.status === 'AVAILABLE'"
-
-                [class.bg-red-100]="reservation.status === 'CANCELED'"
-                [class.text-red-700]="reservation.status === 'CANCELED'"
-              >
-                {{ ReservationStatusLabel[reservation.status] }}
-              </span>
-            </div>
-          </div>
-
-          <span class="badge-dark">
-          {{ reservation.book.categories.forEach(c => c.name) }}
-        </span>
-        </div>
-
-        <p class="text-sm text-gray-600">
-          Réservation effectuée le <strong>{{ reservation.registrationDate | date:'dd/MM/yyyy HH:mm' }}</strong>
-        </p>
-
-        <p class="text-sm text-gray-600">
-          Disponible jusqu'au <strong>{{ reservation.reservationLimitDate | date:'dd/MM/yyyy HH:mm' }}</strong>
-        </p>
-
-        <div class="flex flex-wrap gap-2 mt-3">
-          <a routerLink="" class="btn-primary">
-            Voir le livre
-          </a>
-          @if (reservation.status !== 'CANCELED') {
-            <button (click)="cancelRes(reservation.id)" class="btn-danger">
-              Annuler ma réservation
-            </button>
+        <!-- Image -->
+        <div class="w-28 h-40 shrink-0 overflow-hidden rounded-lg border border-gray-200">
+          @if (reservation.book?.images?.length) {
+            <img
+              [src]="getImageUrl(reservation.book.images[0].path)"
+              [alt]="reservation.book.images[0].name"
+              class="w-full h-full object-cover">
+          } @else {
+            <img
+              src="https://placehold.co/200x300"
+              alt="Couverture du livre"
+              class="w-full h-full object-cover">
           }
         </div>
+
+
+        <!-- Informations -->
+        <div class="flex-1 flex flex-col gap-2">
+
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-semibold">{{ reservation.book.title }}</h2>
+              @for (res of reservation.book.authors; track res.id) {
+                <p class="text-sm text-gray-500">
+                  {{ res.fname }} {{ res.lname }}
+                </p>
+              }
+              <div class="mt-2 flex items-center gap-2">
+              <span class="text-sm text-gray-500">
+                Statut :
+              </span>
+              <span
+                  class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+                  [class.bg-[var(--color-sand)]]="reservation.status === 'WAITING'"
+                  [class.text-[var(--color-primary)]]="reservation.status === 'WAITING'"
+
+                  [class.bg-[var(--color-terracotta)]]="reservation.status === 'AVAILABLE'"
+                  [class.text-white]="reservation.status === 'AVAILABLE'"
+
+                  [class.bg-red-100]="reservation.status === 'CANCELED'"
+                  [class.text-red-700]="reservation.status === 'CANCELED'"
+                >
+                {{ ReservationStatusLabel[reservation.status] }}
+              </span>
+              </div>
+            </div>
+            @for (res of reservation.book.categories; track res.id) {
+              <span class="badge-dark">
+              {{ res.name }}
+            </span>
+            }
+          </div>
+
+          <p class="text-sm text-gray-600">
+            Réservation effectuée le <strong>{{ reservation.registrationDate | date:'dd/MM/yyyy HH:mm' }}</strong>
+          </p>
+
+          <p class="text-sm text-gray-600">
+            Disponible jusqu'au <strong>{{ reservation.reservationLimitDate | date:'dd/MM/yyyy HH:mm' }}</strong>
+          </p>
+
+          <div class="flex flex-wrap gap-2 mt-3">
+            <a routerLink="" class="btn-primary">
+              Voir le livre
+            </a>
+            @if (reservation.status !== 'CANCELED') {
+              <button (click)="cancelRes(reservation.id)" class="btn-danger">
+                Annuler ma réservation
+              </button>
+            }
+          </div>
+        </div>
       </div>
-    </div>
-  }
-</div>
+    }
+  </div>
+
+} @else {
+  <div>
+    <p>Aucun livre réservé.</p>
+  </div>
+}

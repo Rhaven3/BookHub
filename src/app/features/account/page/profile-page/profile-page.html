@@ -77,17 +77,19 @@
       <h2 class="profile-card-title">Réservations en cours</h2>
       <a routerLink="/reservations" class="btn-link">Tout voir</a>
     </div>
-
-    <div class="profile-list">
-      <!-- FAKE DATA — à remplacer par une boucle @for sur les vraies réservations -->
-      <div class="profile-list-item">
-        <div>
-          <a class="profile-list-item-title" href="/books/3">Le Petit Prince</a>
-          <p class="profile-list-item-subtitle">Antoine de Saint-Exupéry</p>
+    @if (reservations()) {
+      @for (reservation of reservations(); track reservation.id) {
+        <div class="profile-list">
+          <div class="profile-list-item">
+            <div>
+              <a class="profile-list-item-title">{{ reservation.book.title }}</a>
+              <p class="profile-list-item-subtitle">{{ reservation.book.authors }}</p>
+            </div>
+            <span class="badge-soft">{{ reservation.registrationDate | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
         </div>
-        <span class="badge-soft">Disponible le 20/08</span>
-      </div>
-    </div>
+      }
+    }
   </div>
 
 </section>
