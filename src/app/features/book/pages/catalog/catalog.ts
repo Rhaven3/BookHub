@@ -37,7 +37,7 @@ export class Catalog {
 
   loadBooks(): void {
     this.bookService
-      .filterBooks(null, null, null, {
+      .filterBooks(null, null, null, null, {
         page: this.currentPage,
         size: this.pageSize,
       })
@@ -64,12 +64,13 @@ export class Catalog {
   }
 
   filterBooks(filters: {
+    word: string | null;
     authorId: number | null;
     categoryId: number | null;
     editorId: number | null;
   }): void {
     this.bookService
-      .filterBooks(filters.authorId, filters.categoryId, filters.editorId, {
+      .filterBooks(filters.word, filters.authorId, filters.categoryId, filters.editorId, {
         page: 0,
         size: this.pageSize,
       })
