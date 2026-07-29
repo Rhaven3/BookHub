@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@reference "../../../../../styles.css";
 
 .author-list {
   @apply max-w-6xl mx-auto p-6;

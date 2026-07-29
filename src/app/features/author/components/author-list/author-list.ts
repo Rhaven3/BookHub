@@ -5,10 +5,11 @@ import { combineLatest, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Author } from '../../author.interface';
 import { FormsModule } from '@angular/forms';
+import { Pagination } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-author-list',
-  imports: [FormsModule],
+  imports: [FormsModule, Pagination],
   templateUrl: './author-list.html',
   styleUrl: './author-list.css',
 })

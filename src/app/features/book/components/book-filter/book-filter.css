@@ -1,0 +1,21 @@
+@reference "../../../../../styles.css";
+
+.book-filter {
+  @apply rounded-xl bg-white p-6 shadow;
+}
+
+.filters-row {
+  @apply grid gap-4 md:grid-cols-2;
+}
+
+.filter {
+  @apply flex flex-col gap-2;
+}
+
+.form-label {
+  @apply font-medium text-gray-700;
+}
+
+.form-select {
+  @apply rounded-lg border border-gray-300 p-2;
+}
