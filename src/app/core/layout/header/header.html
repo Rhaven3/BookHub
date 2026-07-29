@@ -5,9 +5,8 @@
     @if (isAuthenticated()) {
       <a routerLink="/emprunts" class="btn-secondary">Mes emprunts</a>
       <a routerLink="/reservations" class="btn-secondary">Mes réservations</a>
-
       @if (user()?.role === 'ADMIN') {
-        <a routerLink="/admin" class="btn-secondary">Admin</a>
+        <a routerLink="/dashboard" class="btn-secondary">Dashboard</a>
       }
 
       <app-user-dropdown [user]="user()" (logout)="logout()"></app-user-dropdown>
