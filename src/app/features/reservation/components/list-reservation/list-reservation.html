@@ -5,10 +5,10 @@
 
       <!-- Image -->
       <div class="w-28 h-40 shrink-0 overflow-hidden rounded-lg border border-gray-200">
-        @if (reservation.book.image && reservation.book.image.length > 0) {
+        @if (reservation.book.images && reservation.book.images.length > 0) {
           <img
-            [src]="getImageUrl(reservation.book.image[0].path)"
-            [alt]="reservation.book.image[0].name"
+            [src]="getImageUrl(reservation.book.images[0].path)"
+            [alt]="reservation.book.images[0].name"
             class="w-full h-full object-cover">
         } @else {
           <img
