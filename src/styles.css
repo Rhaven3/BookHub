@@ -99,6 +99,13 @@
     transition-colors duration-150 cursor-pointer
     bg-transparent text-[var(--color-clay)] underline px-0 py-0 hover:text-[var(--color-primary)];
   }
+
+  /* Bouton suppression */
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-lg font-medium text-sm
+    px-5 py-2.5 transition-colors duration-150 cursor-pointer
+    bg-[var(--color-primary)] text-white hover:bg-[var(--color-clay)];
+  }
 }
 
 /* ==========================================================================

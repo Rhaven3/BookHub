@@ -1,0 +1,35 @@
+<section class="card max-w-4xl mx-auto mt-10">
+
+  <!-- Titre + bouton de création -->
+  <div class="flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
+    <h2 class="text-2xl font-semibold">Authors</h2>
+    <button class="btn-primary" (click)="createAuthor()">Create author</button>
+  </div>
+
+  <!-- Barre de recherche -->
+  <input [(ngModel)]="searchValue" (input)="searchAuthors(searchValue)" name="search" type="search"
+    placeholder="Search an author..." class="form-input" autocomplete="off" spellcheck="false" />
+
+  <!-- Liste -->
+  <ul class="divide-y divide-gray-200">
+    @for (author of displayAuthors(); track author.id) {
+      <li class="flex items-center justify-between py-4">
+        <div><h3 class="text-lg font-medium">{{ author.fname }} {{ author.lname }}</h3></div>
+        <div class="flex gap-2">
+          <button class="btn-secondary" (click)="editAuthor(author.id!)">Edit</button>
+          <button class="btn-danger" (click)="deleteAuthor(author.id!)">Delete</button>
+        </div>
+      </li>
+    } @empty {
+      <li class="py-6 text-center text-gray-500">No authors found.</li>
+    }
+  </ul>
+
+  <!-- Pagination -->
+  <div class="mt-6 flex items-center justify-between">
+    <button class="btn-secondary" [disabled]="authors()?.first" (click)="goToPage(currentPage() - 1)">Previous</button>
+    <span class="text-sm">Page {{ (authors()?.number ?? 0) + 1 }}/{{ authors()?.totalPages ?? 1 }}</span>
+    <button class="btn-secondary" [disabled]="authors()?.last" (click)="goToPage(currentPage() + 1)">Next</button>
+  </div>
+
+</section>
