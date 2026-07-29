@@ -1,0 +1,70 @@
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+    <tr>
+      @for (column of columns(); track column.key) {
+        <th
+          [class.admin-table-sortable]="column.sortable"
+          [style.width]="column.width"
+          (click)="onSort(column)"
+        >
+          <span class="admin-table-th-content">
+            {{ column.label }}
+            @if (column.sortable) {
+              <span
+                class="admin-table-sort-icon"
+                [class.admin-table-sort-icon--active]="sortKey() === column.key"
+              >
+                @if (sortKey() === column.key) {
+                  {{ sortDirection() === 'asc' ? '▲' : '▼' }}
+                } @else {
+                  ▲
+                }
+              </span>
+            }
+          </span>
+        </th>
+      }
+    </tr>
+    </thead>
+    <tbody>
+      @for (item of pagedData(); track trackBy()(item)) {
+        <tr>
+          @for (column of columns(); track column.key) {
+            <td>
+              <ng-container
+                [ngTemplateOutlet]="getTemplate(column.key)"
+                [ngTemplateOutletContext]="{ $implicit: item }"
+              ></ng-container>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+@if (totalPages() > 1) {
+  <div class="admin-table-pagination">
+    <button
+      type="button"
+      class="admin-table-page-btn"
+      [disabled]="currentPage() === 1"
+      (click)="previousPage()"
+    >
+      Précédent
+    </button>
+
+    <span class="admin-table-page-info">
+      Page {{ currentPage() }} sur {{ totalPages() }}
+    </span>
+
+    <button
+      type="button"
+      class="admin-table-page-btn"
+      [disabled]="currentPage() === totalPages()"
+      (click)="nextPage()"
+    >
+      Suivant
+    </button>
+  </div>
+}

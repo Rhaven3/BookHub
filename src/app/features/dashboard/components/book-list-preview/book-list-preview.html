@@ -1,0 +1,30 @@
+<div class="dashboard-card">
+  <div class="dashboard-card-header">
+    <h2 class="dashboard-card-title">Tous les livres</h2>
+    <a routerLink="/dashboard/livres" class="btn-link">Voir tous les livres</a>
+  </div>
+
+  <div class="dashboard-table">
+    <div class="dashboard-table-header dashboard-table-header--books">
+      <span>Image</span>
+      <span>Titre</span>
+      <span>Auteur</span>
+      <span>Action</span>
+    </div>
+
+    <!-- FAKE DATA — à remplacer par une boucle @for sur les vrais livres -->
+    <div class="dashboard-table-row dashboard-table-row--books">
+      <span class="dashboard-table-thumb"></span>
+      <span>Les Misérables</span>
+      <span>Victor Hugo</span>
+      <a routerLink="/books/1" class="btn-link">Voir</a>
+    </div>
+
+    <div class="dashboard-table-row dashboard-table-row--books">
+      <span class="dashboard-table-thumb"></span>
+      <span>1984</span>
+      <span>George Orwell</span>
+      <a routerLink="/books/2" class="btn-link">Voir</a>
+    </div>
+  </div>
+</div>
