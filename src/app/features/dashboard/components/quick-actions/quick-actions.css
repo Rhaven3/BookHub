@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+.quick-actions-grid {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-3;
+}
+
+.quick-action {
+  @apply flex items-center justify-center text-center px-4 py-3 rounded-lg text-sm font-medium cursor-pointer;
+  background: var(--color-bg);
+  border: 1px solid #E5DFD3;
+  color: var(--color-primary);
+  transition: all 150ms ease;
+}
+
+.quick-action:hover {
+  background: var(--color-sand);
+  border-color: var(--color-terracotta);
+}

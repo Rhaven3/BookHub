@@ -5,9 +5,9 @@ import { AUTH_ROUTES } from './features/auth/auth.routes';
 import { authGuard } from './core/guards/auth/auth-guard';
 import { PROFILE_ROUTES } from './features/account/account.routes';
 import { AUTHOR_ROUTES } from './features/author/author.routes';
+import { RESERVATION_ROUTES } from './features/reservation/reservation.route';
 import { DASHBOARD_ROUTES } from './features/dashboard/dashboard.routes';
 import { adminGuard } from './core/guards/admin/admin-guard';
-import { RESERVATION_ROUTES } from './features/reservation/reservation.route';
 
 export const routes: Routes = [
   { path: 'image', component: MainLayout, children: IMAGE_ROUTES, canActivate: [authGuard] },
