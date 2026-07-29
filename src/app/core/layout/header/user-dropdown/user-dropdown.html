@@ -19,7 +19,7 @@
         Profil
       </a>
       @if (user()?.role === 'ADMIN') {
-        <a routerLink="/admin" class="btn-secondary">Dashboard</a>
+        <a routerLink="/dashboard" class="userMenuItem flex items-center gap-2">Dashboard</a>
       }
       <a routerLink="/loans" class="userMenuItem flex items-center gap-2">
         Mes emprunts

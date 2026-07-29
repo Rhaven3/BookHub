@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.section-kpi {
+  @apply flex justify-between gap-5;
+}
+
+.kpi {
+  @apply flex flex-col w-full text-white items-center justify-center rounded shadow-lg p-4;
+  background: var(--color-clay);
+}
