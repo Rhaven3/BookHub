@@ -25,11 +25,10 @@
     }
   </ul>
 
-  <!-- Pagination -->
-  <div class="mt-6 flex items-center justify-between">
-    <button class="btn-secondary" [disabled]="authors()?.first" (click)="goToPage(currentPage() - 1)">Previous</button>
-    <span class="text-sm">Page {{ (authors()?.number ?? 0) + 1 }}/{{ authors()?.totalPages ?? 1 }}</span>
-    <button class="btn-secondary" [disabled]="authors()?.last" (click)="goToPage(currentPage() + 1)">Next</button>
-  </div>
+  <app-pagination
+    [currentPage]="currentPage()"
+    [totalPages]="authors()?.totalPages ?? 0"
+    (pageChange)="goToPage($event)">
+  </app-pagination>
 
 </section>

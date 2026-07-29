@@ -1,14 +1,15 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { AuthorService } from '../../services/author';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { combineLatest, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Author } from '../../author.interface';
 import { FormsModule } from '@angular/forms';
+import { Pagination } from '../../../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-author-list',
-  imports: [FormsModule],
+  imports: [FormsModule, Pagination],
   templateUrl: './author-list.html',
   styleUrl: './author-list.css',
 })
