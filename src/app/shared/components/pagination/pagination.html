@@ -1,0 +1,15 @@
+@if (totalPages > 1) {
+
+  <div class="mt-6 flex items-center justify-center gap-2">
+    <button class="btn-secondary" (click)="previousPage()" [disabled]="currentPage === 0">Précédent</button>
+
+    @for (page of pages(); track page) {
+      <button (click)="goToPage(page)" [class.btn-primary]="page === currentPage" [class.btn-secondary]="page !== currentPage">
+        {{ page + 1 }}
+      </button>
+    }
+
+    <button class="btn-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Suivant</button>
+  </div>
+
+}
