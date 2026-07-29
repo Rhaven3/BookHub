@@ -14,5 +14,5 @@ export const routes: Routes = [
   { path: 'dashboard', component: MainLayout, children: DASHBOARD_ROUTES, canActivate: [authGuard, adminGuard] },
   { path: 'auth', component: MainLayout, children: AUTH_ROUTES },
   { path: 'author', component: MainLayout, children: AUTHOR_ROUTES, canActivate: [authGuard] },
-  { path: '', redirectTo: '/images', pathMatch: 'full' },
+  { path: '', redirectTo: '/image', pathMatch: 'full' },
 ];
