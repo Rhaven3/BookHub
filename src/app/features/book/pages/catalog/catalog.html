@@ -1,4 +1,4 @@
-<section class="catalog">
+<section class="section-page-admin">
 
   <h1 class="text-3xl font-bold mb-6">Catalogue des livres</h1>
 
@@ -8,6 +8,16 @@
 
   <!-- Liste temporaire des livres -->
   <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    @for (book of books(); track book.id) {
+
+      <article class="rounded-xl border bg-white p-5 shadow">
+        <h2 class="text-xl font-semibold">{{ book.title }}</h2>
+        <p class="mt-2 text-gray-600">{{ book.description }}</p>
+        <p class="mt-2">ISBN : {{ book.isbn }}</p>
+        <p>Langue : {{ book.language }}</p><p>Disponible :{{ book.available ? 'Oui' : 'Non' }}</p>
+      </article>
+
+    }
     @for (book of books(); track book.id) {
 
       <article class="rounded-xl border bg-white p-5 shadow">
