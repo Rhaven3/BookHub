@@ -9,7 +9,7 @@ export interface PendingImage {
 
 @Component({
   selector: 'app-form-add-image',
-  imports: [ReactiveFormsModule, FormInput],
+  imports: [ReactiveFormsModule],
   templateUrl: './form-add-image.html',
   styleUrl: './form-add-image.css',
 })
