@@ -35,6 +35,7 @@
     type="tel"
     filter="numbers"
     autocomplete="tel"
+    [maxLength]="10"
     requiredMessage="Le téléphone est requis."
     patternMessage="Le téléphone ne doit contenir que des chiffres."
   />
@@ -51,7 +52,11 @@
   </div>
 
   <div class="flex items-center gap-3 justify-end">
-    <a routerLink="/account/" class="btn-secondary no-underline">Annuler</a>
+    @if (cancelRoute()) {
+      <a [routerLink]="cancelRoute()" class="btn-secondary no-underline">Annuler</a>
+    } @else {
+      <button type="button" class="btn-secondary" (click)="onCancel()">Annuler</button>
+    }
     <button type="submit" class="btn-primary" [disabled]="loading()">
       {{ loading() ? 'Enregistrement...' : 'Enregistrer les modifications' }}
     </button>

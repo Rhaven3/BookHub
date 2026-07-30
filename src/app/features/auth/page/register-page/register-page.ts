@@ -1,7 +1,7 @@
 import { Component, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth } from '../../service/auth';
-import { RegisterForm } from '../../components/register-form/register-form';
+import { RegisterForm } from '../../../../shared/components/register-form/register-form';
 import { RegisterRequest } from '../../auth.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiResponse } from '../../../../shared/interfaces/apiResponse';

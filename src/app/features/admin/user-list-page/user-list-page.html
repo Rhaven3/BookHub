@@ -1,14 +1,16 @@
 <section class="section-page-admin">
   <div class="section-header">
     <h1 class="section-title">Gestion des adhérents</h1>
-    <a routerLink="/dashboard/users/new" class="btn-primary">Ajouter un adhérent</a>
   </div>
-  <app-search-input
-    placeholder="Rechercher un adhérent..."
-    (searchChange)="searchTerm.set($event)"
-  />
+  <div class="flex justify-between w-full">
+    <app-search-input
+      placeholder="Rechercher un adhérent..."
+      (searchChange)="searchTerm.set($event)"
+    />
+    <button (click)="onCreate()" class="btn-primary">Ajouter un adhérent</button>
+  </div>
   <div class="dashboard-card">
-    <app-data-table [data]="users()" [columns]="columns" [trackBy]="trackByUserId">
+    <app-data-table [data]="users()" [columns]="columns" [trackBy]="trackByUserId" [searchTerm]="searchTerm()">
       <ng-template appColumn="lastName" let-user>{{ user.lastName }}</ng-template>
       <ng-template appColumn="firstName" let-user>{{ user.firstName }}</ng-template>
       <ng-template appColumn="email" let-user>{{ user.email }}</ng-template>
@@ -17,12 +19,12 @@
       <ng-template appColumn="role" let-user>
         @if (user.role === 'ADMIN') {
           <span class="badge-dark">Admin</span>
-        } @else if( user.role === 'LIBRARIAN') {
+        } @else if (user.role === 'LIBRARIAN') {
           <span class="badge-info">Libraire</span>
         } @else {
-        <span class="badge-soft">Utilisateur</span>
+          <span class="badge-soft">Utilisateur</span>
 
-      }
+        }
       </ng-template>
 
       <ng-template appColumn="actions" let-user>
@@ -32,5 +34,20 @@
         </div>
       </ng-template>
     </app-data-table>
+    <app-modal [isOpen]="isEditModalOpen()" title="Modifier les informations" (closeModal)="closeEditModal()">
+      <app-edit-form
+        [initialValue]="userToEdit()"
+        [cancelRoute]="null"
+        (cancel)="closeEditModal()"
+        (submitForm)="onEditSubmit($event)"
+      />
+    </app-modal>
+    <app-modal [isOpen]="isCreateModalOpen()" title="Ajouter un nouvel utilisateur" (closeModal)="closeCreateModal()">
+      <app-register-form
+        [cancelRoute]="null"
+        (cancel)="closeEditModal()"
+        (submitForm)="onCreateSubmit($event)"
+      />
+    </app-modal>
   </div>
 </section>

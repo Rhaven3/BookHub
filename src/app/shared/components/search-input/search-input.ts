@@ -15,6 +15,9 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
   imports: [],
   templateUrl: './search-input.html',
   styleUrl: './search-input.css',
+  host: {
+    class: 'flex-1 flex', // ou 'block w-full'
+  },
 })
 export class SearchInput implements OnDestroy {
   placeholder = input('Rechercher...');

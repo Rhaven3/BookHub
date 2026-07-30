@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .search-input-wrapper {
-  @apply relative flex items-center;
+  @apply w-1/2 relative flex items-center bg-white;
 }
 
 .search-input-icon {
@@ -28,6 +28,4 @@
 .search-input-clear:hover {
   color: var(--color-primary);
 }
-.search-input-wrapper {
-  margin-bottom: 1rem;
-}
+
