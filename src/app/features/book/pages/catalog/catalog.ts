@@ -8,6 +8,7 @@ import { Book } from '../../book.interface';
 import { Category } from '../../../category/category.interface';
 import { Author } from '../../../author/author.interface';
 import { Editor } from '../../../editor/editor.interface';
+import { LoanService } from '../../../loan/services/loan';
 
 @Component({
   selector: 'app-catalog',
@@ -29,6 +30,8 @@ export class Catalog {
 
   currentPage = 0;
   pageSize = 12;
+
+  constructor(private loanService: LoanService) {}
 
   ngOnInit(): void {
     this.loadBooks();
@@ -80,5 +83,26 @@ export class Catalog {
         },
         error: (err) => console.error(err),
       });
+  }
+
+  borrow(book: Book): void {
+    this.loanService.createLoan(book.id).subscribe({
+      next: () => {
+        console.log('Livre emprunté avec succès');
+
+        // mettre à jour le signal
+        this.books.update((books) =>
+          books.map((b) => (b.id === book.id ? { ...b, available: false } : b)),
+        );
+      },
+      error: (err) => {
+        console.error('Erreur lors de l’emprunt', err);
+      },
+    });
+  }
+
+  reserve(book: Book): void {
+    console.log('Réservation demandée', book.id);
+    // appel ReservationService
   }
 }
