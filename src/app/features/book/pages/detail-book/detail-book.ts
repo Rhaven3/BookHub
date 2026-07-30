@@ -15,6 +15,7 @@ import { ImageService } from '../../../image/service/image-service';
 export class DetailBook {
   private bookService = inject(BookService);
   private imageService = inject(ImageService);
+  //private ratingService = inject(RatingService);
   private route = inject(ActivatedRoute);
 
   private id$ = this.route.paramMap.pipe(map((params) => Number(params.get('id') ?? 0)));
