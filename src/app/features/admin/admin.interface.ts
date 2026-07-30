@@ -10,3 +10,11 @@ export interface AdminUser {
   role: string;
   addressDTO: AddressDTO;
 }
+
+export interface AdminUpdateUserRequest {
+  lastName: string;
+  firstName: string;
+  email: string;
+  phone: string;
+  address: AddressDTO;
+}
