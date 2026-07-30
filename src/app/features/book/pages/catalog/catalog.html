@@ -5,29 +5,23 @@
   <!-- Filtres -->
   <app-book-filter [authors]="authors()" [categories]="categories()" [editors]="editors()" (filterChange)="filterBooks($event)"></app-book-filter>
 
+    <div class="books-grid">
+      @for (book of books(); track book.id) {
+        <a href="#" class="book-card">
+          <img src="/images/livre-exemple.jpg" alt="Couverture de {{ book.title }}" class="book-cover">
 
-  <!-- Liste temporaire des livres -->
-  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    @for (book of books(); track book.id) {
+          <div class="book-info">
+            <h2>{{ book.title }}</h2>
 
-      <article class="rounded-xl border bg-white p-5 shadow">
-        <h2 class="text-xl font-semibold">{{ book.title }}</h2>
-        <p class="mt-2 text-gray-600">{{ book.description }}</p>
-        <p class="mt-2">ISBN : {{ book.isbn }}</p>
-        <p>Langue : {{ book.language }}</p><p>Disponible :{{ book.available ? 'Oui' : 'Non' }}</p>
-      </article>
+            <p class="book-author">
+              @for (author of book.authors; track author.id; let last = $last) {
+                {{ author.fname }} {{ author.lname }}@if (!last) {, }
+              }
+            </p>
+          </div>
 
-    }
-    @for (book of books(); track book.id) {
-
-      <article class="rounded-xl border bg-white p-5 shadow">
-        <h2 class="text-xl font-semibold">{{ book.title }}</h2>
-        <p class="mt-2 text-gray-600">{{ book.description }}</p>
-        <p class="mt-2">ISBN : {{ book.isbn }}</p>
-        <p>Langue : {{ book.language }}</p><p>Disponible :{{ book.available ? 'Oui' : 'Non' }}</p>
-      </article>
-
-    }
+        </a>
+      }
   </div>
 
 </section>
