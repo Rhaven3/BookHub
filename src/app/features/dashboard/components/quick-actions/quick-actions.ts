@@ -15,16 +15,13 @@ import { BookForm } from '../../../admin/book-form-page/component/book-form/book
 @Component({
   selector: 'app-quick-actions',
   standalone: true,
-  imports: [RouterLink, Modal, AuthorForm, CategoryForm, RegisterForm, BookForm],
+  imports: [ Modal, AuthorForm, CategoryForm, RegisterForm, BookForm],
   templateUrl: './quick-actions.html',
   styleUrl: './quick-actions.css',
 })
 export class QuickActions {
-  private categoryService = inject(CategoryService);
   private authService = inject(Auth);
-  private categoryForm = viewChild.required(CategoryForm);
   private registerForm = viewChild.required(RegisterForm);
-  private bookForm = viewChild.required(BookForm);
 
   loading = signal(false);
   errorMessage = signal<string | null>(null);
@@ -59,11 +56,7 @@ export class QuickActions {
     this.isCreateUserModalOpen.set(false);
   }
 
-  // Livre
-  onCreateBook(): void {
-    this.isEditBook.set(false);
-    this.isCreateBookModalOpen.set(true);
-  }
+
 
   closeCreateBookModal(): void {
     this.isCreateBookModalOpen.set(false);
