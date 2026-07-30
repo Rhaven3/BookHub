@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NotificationService } from './features/notification/service/notification-service';
+import { Auth } from './features/auth/service/auth';
+import { NotificationService } from './core/layout/header/notification/service/notification-service';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,15 @@ import { NotificationService } from './features/notification/service/notificatio
 export class App {
   protected readonly title = signal('BookHub');
   private notificationService = inject(NotificationService);
+  private authService = inject(Auth)
+  private readonly token = this.authService.token();
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.notificationService.connect(token);
+    if (this.token) {
+      this.notificationService.connect(this.token);
       this.notificationService
         .getAllMeNotification()
-        .subscribe((notifs) => this.notificationService.setInitialNotifications(notifs.data));
+        .subscribe((notifs) => this.notificationService.setInitialNotifications(notifs));
     }
   }
 }

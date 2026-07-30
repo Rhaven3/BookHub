@@ -451,3 +451,166 @@
     @apply max-w-6xl mx-auto px-4 py-10 flex flex-col gap-6;
   }
 }
+
+/* Dropdown menu */
+
+.userDropdown {
+  @apply relative;
+}
+
+.userTrigger {
+  @apply flex h-11 text-white items-center gap-2 px-4 cursor-pointer text-sm font-medium;
+
+  background: var(--color-primary);
+  border: 1px solid #E5DFD3;
+  border-radius: 8px;
+  transition: background 150ms ease;
+}
+
+.userTrigger:hover {
+  background: color-mix(in srgb, var(--color-primary) 80%, white);
+}
+
+.userMenu {
+  @apply absolute right-0 overflow-hidden z-50;
+
+  top: 55px;
+  width: 240px;
+
+  background: white;
+  border: 1px solid #E5DFD3;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(74, 55, 40, 0.14);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all 220ms ease;
+}
+
+.notificationMenu {
+  @apply absolute right-0 overflow-hidden z-50;
+
+  top: 55px;
+  width: 480px;
+
+  background: white;
+  border: 1px solid #E5DFD3;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(74, 55, 40, 0.14);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all 220ms ease;
+}
+
+.group:hover .userMenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.group:hover .notificationMenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+.userMenuHeader {
+  @apply p-4;
+  border-bottom: 1px solid #E5DFD3;
+}
+
+.userMenuName {
+  @apply text-sm font-semibold;
+  color: var(--color-primary);
+}
+
+.userMenuEmail {
+  @apply text-xs truncate;
+  color: #9C8B72;
+}
+
+.userMenuSection {
+  @apply py-2;
+  max-height: 400px; /* ← limite la hauteur si beaucoup de notifs */
+  overflow-y: auto;
+}
+
+.userMenuItem {
+  @apply block w-full px-4 py-3 flex items-center gap-2 text-left text-sm cursor-pointer;
+  color: #6B5A47;
+  transition: all 150ms ease;
+}
+
+.userMenuItem:hover {
+  background: var(--color-sand);
+  color: var(--color-primary);
+}
+
+.userMenuDivider {
+  height: 1px;
+  background: #E5DFD3;
+  margin: 6px 0;
+}
+
+.userMenuDanger {
+  color: #B3311F;
+}
+
+.userMenuDanger:hover {
+  background: #fdf1ee;
+  color: #B3311F;
+}
+
+/* Notification non lue : plus foncée / mise en avant */
+.userMenuItem.unread {
+  background: color-mix(in srgb, var(--color-primary) 8%, white);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.userMenuItem.unread:hover {
+  background: color-mix(in srgb, var(--color-primary) 14%, white);
+}
+
+.notifContent {
+  @apply flex-1 min-w-0;
+}
+
+.notifContent p {
+  @apply truncate;
+}
+
+.notifContent small {
+  color: #9C8B72;
+}
+
+.userMenuItem.unread .notifContent small {
+  color: color-mix(in srgb, var(--color-primary) 60%, #9C8B72);
+}
+
+/* Bouton de suppression */
+.notifDeleteBtn {
+  @apply flex items-center justify-center shrink-0;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: transparent;
+  color: #9C8B72;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.notifDeleteBtn:hover {
+  background: #fdf1ee;
+  color: #B3311F;
+}
+
+.userMenuEmpty {
+  @apply px-4 py-6 text-sm text-center;
+  color: #9C8B72;
+}

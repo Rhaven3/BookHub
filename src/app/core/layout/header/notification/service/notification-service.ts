@@ -1,7 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ENVIRONMENT } from '../../../environments/environment';
-import { ApiResponse } from '../../../shared/interfaces/apiResponse';
 import {
   NotificationCreateDTO,
   NotificationDto,
@@ -10,6 +8,8 @@ import {
 import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { BehaviorSubject } from 'rxjs';
+import { ENVIRONMENT } from '../../../../../environments/environment';
+import { ApiResponse } from '../../../../../shared/interfaces/apiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -78,7 +78,7 @@ export class NotificationService {
 
   markAsRead(notif: NotificationDto): void {
     const updated = this.notificationsSubject.value.map((n) =>
-      n.id === notif.id ? { ...n, read: true } : n,
+      n.id === notif.id ? { ...n, isRead: true } : n,
     );
     this.notificationsSubject.next(updated);
   }
@@ -96,7 +96,7 @@ export class NotificationService {
   }
 
   getAllMeNotification() {
-    return this.http.get<ApiResponse<NotificationDto[]>>(`${this.baseUrl}/notifications/me`);
+    return this.http.get<NotificationDto[]>(`${this.baseUrl}/notifications/me`);
   }
 
   getNotificationById(id: number) {
@@ -112,12 +112,17 @@ export class NotificationService {
 
   setReadNotification(notification: NotificationReadDTO) {
     return this.http.patch<ApiResponse<NotificationDto>>(
-      `${this.baseUrl}/notifications/${notification.id}`,
-      notification,
+      `${this.baseUrl}/notifications/read`,
+      notification
     );
   }
 
   deleteNotification(id: number) {
     return this.http.delete<ApiResponse<string>>(`${this.baseUrl}/notifications/${id}`);
+  }
+
+  removeNotification(id: number): void {
+    const updated = this.notificationsSubject.value.filter((n) => n.id !== id);
+    this.notificationsSubject.next(updated);
   }
 }

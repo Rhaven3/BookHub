@@ -16,7 +16,7 @@ import { ApiResponse } from '../../../shared/interfaces/apiResponse';
 import { AuthResponse, CurrentUser, LoginRequest, RegisterRequest } from '../auth.interface';
 import { ENVIRONMENT } from '../../../environments/environment';
 import { AdminUser } from '../../admin/admin.interface';
-import { NotificationService } from '../../notification/service/notification-service';
+import { NotificationService } from '../../../core/layout/header/notification/service/notification-service';
 
 /** temps avant le refresh Auto du token */
 const REFRESH_MARGIN_MS = 30_000;
@@ -56,17 +56,18 @@ export class Auth {
   login(dto: LoginRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.baseUrl}/auth/login`, dto, { withCredentials: true })
-      .pipe(tap((response) => {
-        localStorage.setItem('token', response.accessToken);
-        this.setSession(response);
-        // on lance la connexion WebSocket
-        this.notificationService.connect(response.accessToken);
+      .pipe(
+        tap((response) => {
+          this.setSession(response);
+          // on lance la connexion WebSocket
+          this.notificationService.connect(response.accessToken);
 
-        // et on charge l'historique des non-lues via REST
-        this.notificationService.getAllMeNotification().subscribe((notifs) => {
-          this.notificationService.setInitialNotifications(notifs.data);
-        });
-      }));
+          // et on charge l'historique des non-lues via REST
+          this.notificationService.getAllMeNotification().subscribe((notifs) => {
+            this.notificationService.setInitialNotifications(notifs);
+          });
+        }),
+      );
   }
 
   register(dto: RegisterRequest): Observable<AdminUser> {

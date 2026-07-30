@@ -9,6 +9,7 @@
         <a routerLink="/dashboard" class="btn-secondary">Dashboard</a>
       }
 
+      <app-notification/>
       <app-user-dropdown [user]="user()" (logout)="logout()"></app-user-dropdown>
     } @else {
       <a routerLink="/auth/login" class="app-header-link">Connexion</a>

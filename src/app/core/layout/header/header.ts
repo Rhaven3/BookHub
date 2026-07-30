@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Auth } from '../../../features/auth/service/auth';
 import { UserDropdown } from './user-dropdown/user-dropdown';
+import { Notification } from './notification/notification';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, UserDropdown],
+  imports: [RouterLink, UserDropdown, Notification, Notification],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
