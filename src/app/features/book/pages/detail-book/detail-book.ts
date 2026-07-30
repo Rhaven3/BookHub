@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Signal, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BookService } from '../../services/book';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -9,6 +9,8 @@ import { Book } from '../../book.interface';
 import { LoanService } from '../../../loan/services/loan';
 import { FlashMessageService } from '../../../../core/services/flashMessage/flash-message-service';
 import { ReservationService } from '../../../reservation/service/reservation-service';
+import { RatingInterface } from '../../../rating/rating.interface';
+import { RatingService } from '../../../rating/service/rating-service';
 
 @Component({
   selector: 'app-detail-book',
@@ -20,6 +22,7 @@ export class DetailBook {
   private bookService = inject(BookService);
   private imageService = inject(ImageService);
   private loanService = inject(LoanService);
+  private ratingService = inject(RatingService);
   private reservationService = inject(ReservationService);
   private flashMessage = inject(FlashMessageService);
   //private ratingService = inject(RatingService);
@@ -30,20 +33,14 @@ export class DetailBook {
 
   bookSelected = toSignal(
     toObservable(this.refreshTrigger).pipe(
-      switchMap(() =>
-        this.bookId$.pipe(
-          switchMap((id) => this.bookService.getBookById(id)),
-        ),
-      ),
+      switchMap(() => this.bookId$.pipe(switchMap((id) => this.bookService.getBookById(id)))),
     ),
   );
 
   bookByEditor = toSignal(
     this.bookId$.pipe(
       switchMap((id) => this.bookService.getBookById(id)),
-      switchMap((res) =>
-        this.bookService.getBooksByEditor(res.editor.id, { page: 0, size: 5 }),
-      ),
+      switchMap((res) => this.bookService.getBooksByEditor(res.editor.id, { page: 0, size: 5 })),
       map((res) => res.data.content),
     ),
     { initialValue: [] },
@@ -58,6 +55,15 @@ export class DetailBook {
       map((res) =>
         res.data.content.filter((otherBook) => otherBook.id !== this.bookSelected()?.id),
       ),
+    ),
+    { initialValue: [] },
+  );
+
+  ratingByBook: Signal<RatingInterface[]> = toSignal(
+    toObservable(this.bookSelected).pipe(
+      filter((book) => !!book?.id),
+      switchMap((book) => this.ratingService.getRatingByBook(book!.id, { page: 0, size: 4 })),
+      map((res) => res.data.content),
     ),
     { initialValue: [] },
   );

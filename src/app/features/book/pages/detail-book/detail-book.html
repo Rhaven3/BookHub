@@ -166,13 +166,47 @@
 
     <div class="grid md:grid-cols-2 gap-5">
 
-      <div class="card h-40"></div>
+      @for (rating of ratingByBook(); track rating.id) {
 
-      <div class="card h-40"></div>
+        <div class="rounded-xl border border-gray-200 p-5 shadow-sm bg-white">
 
-      <div class="card h-40"></div>
+          <div class="flex items-start justify-between mb-3">
 
-      <div class="card h-40"></div>
+            <div>
+              <h3 class="font-semibold">
+                {{ rating.user.firstName }} {{ rating.user.lastName }}
+              </h3>
+
+              <div class="text-yellow-500 text-lg">
+                @for (star of [1,2,3,4,5]; track star) {
+                  @if (star <= rating.note) {
+                    ★
+                  } @else {
+                    ☆
+                  }
+                }
+              </div>
+            </div>
+
+            <span class="text-sm text-gray-400 whitespace-nowrap">
+          {{ rating.date | date:'dd/MM/yyyy' }}
+        </span>
+
+          </div>
+
+          <p class="text-gray-700 line-clamp-3">
+            {{ rating.commentary }}
+          </p>
+
+        </div>
+
+      } @empty {
+
+        <div class="col-span-full text-center text-gray-500 py-8">
+          Aucun avis pour ce livre.
+        </div>
+
+      }
 
     </div>
 
@@ -181,7 +215,7 @@
   <!-- ========================= -->
   <!-- Suggestions -->
   <!-- ========================= -->
-  @if (bookByCategory().length < 0) {
+  @if (bookByCategory().length > 0) {
     <section>
 
       <h2 class="text-2xl font-semibold mb-4">
