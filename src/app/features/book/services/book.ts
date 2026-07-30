@@ -31,8 +31,10 @@ export class BookService {
     );
   }
 
-  getBookById(id: number): Observable<ApiResponse<Book>> {
-    return this.http.get<ApiResponse<Book>>(`${this.baseUrl}/book/${id}`);
+  getBookById(id: number): Observable<Book> {
+    return this.http
+      .get<ApiResponse<Book>>(`${this.baseUrl}/book/${id}`)
+      .pipe(map((response) => response.data));
   }
 
   createBook(formData: FormData): Observable<Book> {

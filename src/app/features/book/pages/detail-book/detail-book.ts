@@ -22,9 +22,7 @@ export class DetailBook {
   book = toSignal(
     this.id$.pipe(
       switchMap((id) =>
-        this.bookService.getBookById(id).pipe(
-          map(res => res.data)
-        ))
+        this.bookService.getBookById(id))
       )
   );
 
