@@ -1,0 +1,62 @@
+<section class="section-page-admin">
+
+  <div class="section-header">
+    <div class="flex flex-col">
+      <a routerLink="/dashboard" class="dashboard-back-link">
+        ← Retour au dashboard
+      </a>
+      <h1 class="section-title">Gestion des livres</h1>
+    </div>
+  </div>
+
+  <div class="flex justify-between w-full">
+    <app-search-input
+      placeholder="Rechercher un livre..."
+      (searchChange)="searchTerm.set($event)"
+    />
+    <a routerLink="/dashboard/books/new" class="btn-primary">Ajouter un livre</a>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="form-alert">{{ errorMessage() }}</p>
+  }
+
+  <div class="dashboard-card">
+    <app-data-table [data]="books()" [columns]="columns" [trackBy]="trackByBookId" [searchTerm]="searchTerm()">
+      <ng-template appColumn="title" let-book>{{ book.title }}</ng-template>
+      <ng-template appColumn="isbn" let-book>{{ book.isbn }}</ng-template>
+      <ng-template appColumn="language" let-book>{{ book.language }}</ng-template>
+
+      <ng-template appColumn="available" let-book>
+        @if (book.available) {
+          <span class="badge-soft">Disponible</span>
+        } @else {
+          <span class="badge-dark">Indisponible</span>
+        }
+      </ng-template>
+
+      <ng-template appColumn="owned" let-book>
+        @if (book.owned) {
+          <span class="badge-soft">Oui</span>
+        } @else {
+          <span class="badge-dark">Non</span>
+        }
+      </ng-template>
+
+      <ng-template appColumn="actions" let-book>
+        <div class="flex items-center justify-between">
+          <a [routerLink]="['/dashboard/books', book.id, 'edit']" class="btn-link">Modifier</a>
+          <button type="button" class="admin-table-danger-link" (click)="onDelete(book)">Supprimer</button>
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+
+  <app-modal [isOpen]="isDeleteModalOpen()" title="Confirmer la suppression" (closeModal)="closeDeleteModal()">
+    <p>Es-tu sûr de vouloir supprimer le livre "{{ bookToDelete()?.title }}" ?</p>
+    <div class="flex gap-3 justify-end mt-4">
+      <button class="btn-secondary" (click)="closeDeleteModal()">Annuler</button>
+      <button class="btn-primary" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </app-modal>
+</section>

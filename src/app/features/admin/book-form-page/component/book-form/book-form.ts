@@ -17,6 +17,8 @@ import { Editor } from '../../../../editor/editor.interface';
 import { ImageInterface } from '../../../../image/image.interface';
 import { BookRequest } from '../../../../book/book-request.interface';
 import { FormAddImage, PendingImage } from '../../../../image/components/form-add-image/form-add-image';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ApiResponse } from '../../../../../shared/interfaces/apiResponse';
 
 @Component({
   selector: 'app-book-form',
@@ -202,9 +204,11 @@ export class BookForm {
         this.bookService.triggerRefresh();
         this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
-        console.error(err);
-        this.submitError.set("Une erreur est survenue lors de l'enregistrement.");
+      error: (err: HttpErrorResponse) => {
+        const apiError = err.error as ApiResponse<null>;
+        this.submitError.set(
+          apiError?.message ?? "Une erreur est survenue lors de l'enregistrement.",
+        );
       },
     });
   }
