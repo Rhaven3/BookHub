@@ -33,9 +33,7 @@ export class LoanList {
     toObservable(this.refreshTrigger).pipe(
       switchMap(() =>
         this.loanService
-          .getLoans({ page: 0, size: 10 },
-            this.selectedStatus(),
-            this.selectedDate())
+          .getLoans({ page: 0, size: 10 }, this.selectedStatus(), this.selectedDate())
           .pipe(
             map((response) => response.content),
             catchError(() => {
@@ -47,4 +45,8 @@ export class LoanList {
     ),
     { initialValue: [] },
   );
+
+  getImageUrl(path: string): string {
+    return this.imageService.getImageUrl(path);
+  }
 }
