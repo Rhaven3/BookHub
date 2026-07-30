@@ -2,7 +2,7 @@ import { Component, inject, signal, viewChild } from '@angular/core';
   import { Router } from '@angular/router';
 import { Auth } from '../../../auth/service/auth';
 import { UpdateProfileRequest } from '../../account.interface';
-import { EditForm } from '../../components/edit-form/edit-form';
+import { EditForm } from '../../../../shared/components/edit-form/edit-form';
 import { AccountService } from '../../service/account';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiResponse } from '../../../../shared/interfaces/apiResponse';
