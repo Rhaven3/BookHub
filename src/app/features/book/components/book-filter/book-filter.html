@@ -8,7 +8,7 @@
         <option [ngValue]="null">Tous les auteurs</option>
         @for (author of authors; track author.id) {
           <option [ngValue]="author.id">
-            {{ author.fname }} {{ author.lname }}
+            {{ author.firstName }} {{ author.lastName }}
           </option>
         }
       </select>

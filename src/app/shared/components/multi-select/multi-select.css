@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+.multi-select {
+  @apply flex flex-col gap-2;
+}
+
+.multi-select-chips {
+  @apply flex flex-wrap gap-2;
+}
+
+.multi-select-chip {
+  @apply inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full;
+  background: var(--color-sand);
+  color: var(--color-primary);
+}
+
+.multi-select-chip-remove {
+  @apply text-xs cursor-pointer;
+  color: var(--color-clay);
+}
+
+.multi-select-chip-remove:hover {
+  color: var(--color-primary);
+}
+
+.multi-select-search-wrapper {
+  @apply relative;
+}
+
+.multi-select-dropdown {
+  @apply absolute left-0 right-0 z-50 mt-1 overflow-hidden;
+
+  max-height: 220px;
+  overflow-y: auto;
+
+  background: white;
+  border: 1px solid #E5DFD3;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(74, 55, 40, 0.14);
+}
+
+.multi-select-item {
+  @apply px-4 py-2.5 text-sm cursor-pointer;
+  color: var(--color-primary);
+  transition: background 100ms ease;
+}
+
+.multi-select-item:hover {
+  background: var(--color-sand);
+}
+
+.multi-select-item--create {
+  color: var(--color-terracotta);
+  font-weight: 500;
+}

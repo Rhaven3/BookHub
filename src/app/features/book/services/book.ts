@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { ENVIRONMENT } from '../../../environments/environment';
 
@@ -35,12 +35,16 @@ export class BookService {
     return this.http.get<Book>(`${this.baseUrl}/book/${id}`);
   }
 
-  createBook(book: BookRequest): Observable<Book> {
-    return this.http.post<Book>(`${this.baseUrl}/book`, book);
+  createBook(formData: FormData): Observable<Book> {
+    return this.http
+      .post<ApiResponse<Book>>(`${this.baseUrl}/book`, formData)
+      .pipe(map((r) => r.data));
   }
 
-  updateBook(id: number, book: BookRequest): Observable<Book> {
-    return this.http.put<Book>(`${this.baseUrl}/book/${id}`, book);
+  updateBook(id: number, formData: FormData): Observable<Book> {
+    return this.http
+      .put<ApiResponse<Book>>(`${this.baseUrl}/book/${id}`, formData)
+      .pipe(map((r) => r.data));
   }
 
   deleteBook(id: number): Observable<void> {

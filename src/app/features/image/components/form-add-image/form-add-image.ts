@@ -1,42 +1,55 @@
-import { Component, inject } from '@angular/core';
+import { Component, output, ElementRef, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ImageService } from '../../service/image-service';
+import { FormInput } from '../../../../shared/components/form-input/form-input';
+
+export interface PendingImage {
+  name: string;
+  file: File;
+}
 
 @Component({
   selector: 'app-form-add-image',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormInput],
   templateUrl: './form-add-image.html',
   styleUrl: './form-add-image.css',
 })
 export class FormAddImage {
+  added = output<PendingImage>();
 
-  private service = inject(ImageService);
+  private fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
 
   imageForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
+    name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
   selectedFile: File | null = null;
 
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
     }
   }
 
-  onSubmit() {
-    if (!this.selectedFile) return;
+  onAdd(): void {
+    console.log('je passe ici !! ')
+    if (!this.selectedFile || this.imageForm.invalid) {
+      this.imageForm.markAllAsTouched();
+      return;
+    }
 
-    this.service.addImage(this.imageForm.value.name!, this.selectedFile).subscribe({
-      next: (res) => {
-        console.log('Uploadé:', res);
-        this.imageForm.reset();
-        this.selectedFile = null;
-        res.data.path;
-        this.service.triggerRefresh();
-      },
-      error: (err) => console.error('Erreur:', err),
+    this.added.emit({
+      name: this.imageForm.value.name!,
+      file: this.selectedFile,
     });
+
+    this.imageForm.reset();
+    this.selectedFile = null;
+
+    // Vide réellement l'input file affiché (reset() du FormGroup ne suffit pas)
+    const inputEl = this.fileInput()?.nativeElement;
+    if (inputEl) {
+      inputEl.value = '';
+    }
   }
 }

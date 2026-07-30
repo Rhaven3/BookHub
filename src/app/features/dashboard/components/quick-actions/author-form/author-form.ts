@@ -1,11 +1,12 @@
 import { Component, inject, input, output } from '@angular/core';
-import { AuthorService } from '../../services/author';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthorService } from '../../../../author/services/author';
+import { FormInput } from '../../../../../shared/components/form-input/form-input';
 
 @Component({
   selector: 'app-author-form',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, FormInput],
   templateUrl: './author-form.html',
   styleUrl: './author-form.css',
 })
@@ -14,6 +15,9 @@ export class AuthorForm {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
+  loading = input(false);
+  errorMessage = input<string | null>(null);
+
   cancelRoute = input<string | null>('/author');
   cancel = output<void>();
 
@@ -21,8 +25,14 @@ export class AuthorForm {
   isEditMode = false;
 
   authorForm = new FormGroup({
-    firstName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    lastName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    firstName: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ' -]+$/)],
+    }),
+    lastName: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(/^[a-zA-ZÀ-ÿ' -]+$/)],
+    }),
   });
 
   ngOnInit() {
@@ -49,6 +59,7 @@ export class AuthorForm {
 
   onSubmit(): void {
     if (this.authorForm.invalid) {
+      this.authorForm.markAllAsTouched();
       return;
     }
 

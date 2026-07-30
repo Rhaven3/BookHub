@@ -15,6 +15,9 @@
 .form-label {
   @apply font-medium text-gray-700;
 }
+.form-label-sub{
+  @apply font-medium text-xs text-gray-500
+}
 
 .form-select {
   @apply rounded-lg border border-gray-300 p-2;

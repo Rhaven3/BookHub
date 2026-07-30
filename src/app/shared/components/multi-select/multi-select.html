@@ -1,0 +1,50 @@
+<div class="multi-select">
+
+  <!-- RECHERCHE -->
+  <div class="multi-select-search-wrapper">
+    <input
+      type="text"
+      [placeholder]="placeholder"
+      [value]="searchTerm()"
+      class="form-input"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+
+    @if (isOpen() && (filteredOptions().length > 0 || showCreateOption())) {
+      <ul class="multi-select-dropdown">
+        @for (option of filteredOptions(); track option.id) {
+          <li class="multi-select-item" (click)="select(option)">
+            {{ option.label }}
+          </li>
+        }
+
+        @if (showCreateOption()) {
+          <li class="multi-select-item multi-select-item--create" (click)="onCreateClick()">
+            + Créer "{{ searchTerm() }}"
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  <!-- CHIPS SÉLECTIONNÉES + EN ATTENTE -->
+  @if (selectedOptions().length > 0 || pendingLabels().length > 0) {
+    <div class="multi-select-chips">
+      @for (option of selectedOptions(); track option.id) {
+        <span class="multi-select-chip">
+          {{ option.label }}
+          <button type="button" class="multi-select-chip-remove" (click)="remove(option.id)">✕</button>
+        </span>
+      }
+
+      @for (label of pendingLabels(); track $index) {
+        <span class="multi-select-chip multi-select-chip--pending">
+          {{ label }} <span class="multi-select-chip-badge">nouveau</span>
+          <button type="button" class="multi-select-chip-remove" (click)="removePending.emit($index)">✕</button>
+        </span>
+      }
+    </div>
+  }
+</div>

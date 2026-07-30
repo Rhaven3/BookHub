@@ -1,0 +1,141 @@
+<form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="form-container" novalidate>
+
+  <app-form-input
+    formControlName="title"
+    label="Titre"
+    requiredMessage="Le titre est requis."
+  />
+
+  <app-form-input
+    formControlName="description"
+    label="Description"
+    requiredMessage="La description est requise."
+    patternMessage="La description ne peut pas dépasser 2000 caractères."
+  />
+
+  <div class="grid grid-cols-2 gap-4">
+    <div class="form-field">
+      <label class="form-label" for="publishDate">Date de publication</label>
+      <input
+        id="publishDate"
+        type="date"
+        formControlName="publishDate"
+        class="form-input"
+        [class.form-input-error]="bookForm.get('publishDate')?.invalid && bookForm.get('publishDate')?.touched"
+      />
+      @if (bookForm.get('publishDate')?.invalid && bookForm.get('publishDate')?.touched) {
+        @if (bookForm.get('publishDate')?.errors?.['futureDate']) {
+          <span class="form-error-text">La date ne peut pas être dans le futur.</span>
+        } @else {
+          <span class="form-error-text">La date de publication est requise.</span>
+        }
+      }
+    </div>
+
+    <app-form-input
+      formControlName="language"
+      label="Langue"
+      requiredMessage="La langue est requise."
+    />
+  </div>
+
+  <app-form-input
+    formControlName="isbn"
+    label="ISBN"
+    requiredMessage="L'ISBN est requis."
+    patternMessage="Format d'ISBN invalide (10 ou 13 chiffres, ex: 9782070368228)."
+  />
+
+  <!-- ÉDITEUR -->
+  <div class="form-field mb-4">
+    <label class="form-label" for="editorId">Éditeur</label>
+    <select id="editorId" formControlName="editorId" class="form-input">
+      <option [ngValue]="null" disabled>Sélectionner un éditeur</option>
+      @for (editor of availableEditors(); track editor.id) {
+        <option [ngValue]="editor.id">{{ editor.name }}</option>
+      }
+    </select>
+    @if (bookForm.get('editorId')?.invalid && bookForm.get('editorId')?.touched) {
+      <span class="form-error-text">L'éditeur est requis.</span>
+    }
+  </div>
+
+  <!-- AUTEURS -->
+  <div class="form-field mb-4">
+    <label class="form-label">Auteurs</label>
+    <app-multi-select
+      [options]="authorOptions()"
+      [selectedIds]="selectedAuthorIds()"
+      [pendingLabels]="pendingAuthorLabels()"
+      [allowCreate]="true"
+      placeholder="Rechercher un auteur..."
+      (selectionChange)="selectedAuthorIds.set($event)"
+      (createRequested)="onCreateAuthorInline($event)"
+      (removePending)="onRemovePendingAuthor($event)"
+    />
+  </div>
+
+  <!-- CATÉGORIES -->
+  <div class="form-field mb-4">
+    <label class="form-label">Catégories</label>
+    <div class="flex flex-wrap gap-2">
+      @for (category of availableCategories(); track category.id) {
+        <label class="book-form-checkbox">
+          <input
+            type="checkbox"
+            [checked]="selectedCategoryIds().includes(category.id)"
+            (change)="toggleCategory(category.id)"
+          />
+          {{ category.name }}
+        </label>
+      }
+    </div>
+  </div>
+
+  <!-- IMAGES EXISTANTES (mode édition uniquement) -->
+  @if (existingImages().length > 0) {
+    <div class="form-field">
+      <label class="form-label">Images actuelles</label>
+      <div class="multi-select-chips">
+        @for (image of existingImages(); track image.id) {
+          <span class="multi-select-chip">
+            {{ image.name }}
+            <button type="button" class="multi-select-chip-remove" (click)="removeExistingImage(image.id!)">✕</button>
+          </span>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- NOUVELLES IMAGES -->
+  <div class="form-field mb-4">
+    <label class="form-label">Ajouter une image</label>
+    <app-form-add-image (added)="onImageAdded($event)" />
+
+    @if (pendingImages().length > 0) {
+      <div class="multi-select-chips mt-2">
+        @for (image of pendingImages(); track image.name; let i = $index) {
+          <span class="multi-select-chip multi-select-chip--pending">
+            {{ image.name }} <span class="multi-select-chip-badge">nouveau</span>
+            <button type="button" class="multi-select-chip-remove" (click)="removePendingImage(i)">✕</button>
+          </span>
+        }
+      </div>
+    }
+  </div>
+
+  @if (submitError()) {
+    <p class="form-alert">{{ submitError() }}</p>
+  }
+
+  <div class="flex items-center gap-3 justify-end">
+    @if (cancelRoute()) {
+      <a [routerLink]="cancelRoute()" class="btn-secondary no-underline">Annuler</a>
+    } @else {
+      <button type="button" class="btn-secondary" (click)="onCancel()">Annuler</button>
+    }
+    <button type="submit" class="btn-primary">
+      {{ isEditMode ? 'Update' : 'Create' }}
+    </button>
+  </div>
+</form>
