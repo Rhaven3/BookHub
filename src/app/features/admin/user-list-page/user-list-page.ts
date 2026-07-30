@@ -1,5 +1,4 @@
 import { Component, effect, inject, OnInit, signal, viewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { DataTable } from '../../../shared/components/data-table/data-table';
 import { ColumnDirective } from '../../../shared/components/data-table/data-table-column.directive';
 import { TableColumn } from '../../../shared/components/data-table/data-table.interface';
@@ -18,7 +17,7 @@ import { Auth } from '../../auth/service/auth';
 @Component({
   selector: 'app-user-list-page',
   standalone: true,
-  imports: [RouterLink, DataTable, ColumnDirective, SearchInput, EditForm, RegisterForm, Modal],
+  imports: [DataTable, ColumnDirective, SearchInput, EditForm, RegisterForm, Modal],
   templateUrl: './user-list-page.html',
   styleUrl: './user-list-page.css',
 })

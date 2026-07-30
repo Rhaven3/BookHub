@@ -30,7 +30,7 @@ export class NotificationService {
     if (this.client?.active) return; // déjà connecté, on évite les doublons
 
     this.client = new Client({
-      webSocketFactory: () => new SockJS(`${this.baseUrl}/ws`),
+      webSocketFactory: () => new SockJS(`http://localhost:8080/ws`),
       connectHeaders: {
         Authorization: `Bearer ${token}`,
       },
