@@ -9,7 +9,6 @@ import { Book } from '../../book.interface';
 import { LoanService } from '../../../loan/services/loan';
 import { FlashMessageService } from '../../../../core/services/flashMessage/flash-message-service';
 import { ReservationService } from '../../../reservation/service/reservation-service';
-import { Pageable } from '../../../../shared/interfaces/pageable';
 
 @Component({
   selector: 'app-detail-book',
@@ -33,7 +32,7 @@ export class DetailBook {
     toObservable(this.refreshTrigger).pipe(
       switchMap(() =>
         this.bookId$.pipe(
-          switchMap((id) => this.bookService.getBookById(id).pipe(map((res) => res.data))),
+          switchMap((id) => this.bookService.getBookById(id)),
         ),
       ),
     ),
@@ -43,7 +42,7 @@ export class DetailBook {
     this.bookId$.pipe(
       switchMap((id) => this.bookService.getBookById(id)),
       switchMap((res) =>
-        this.bookService.getBooksByEditor(res.data.editor.id, { page: 0, size: 5 }),
+        this.bookService.getBooksByEditor(res.editor.id, { page: 0, size: 5 }),
       ),
       map((res) => res.data.content),
     ),

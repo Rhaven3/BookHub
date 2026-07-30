@@ -16,7 +16,7 @@
 
               <p class="book-author">
                 @for (author of book.authors; track author.id; let last = $last) {
-                  {{ author.fname }} {{ author.lname }}@if (!last) {, }
+                  {{ author.firstName }} {{ author.lastName }}@if (!last) {, }
                 }
               </p>
             </div>

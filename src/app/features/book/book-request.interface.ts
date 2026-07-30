@@ -4,10 +4,18 @@ export interface BookRequest {
   publishDate: string;
   language: string;
   isbn: string;
-  available: boolean;
   editorId: number;
 
   authorIds: number[];
+  newAuthors: AuthorRequest[];
+
   categoryIds: number[];
-  imageIds: number[];
+
+  keepImageIds: number[];
+  newImageNames: string[];
+}
+
+export interface AuthorRequest {
+  firstName: string;
+  lastName: string;
 }

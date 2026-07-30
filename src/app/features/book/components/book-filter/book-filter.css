@@ -24,6 +24,9 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
+.form-label-sub{
+  @apply font-medium text-xs text-gray-500
+}
 
 .form-control,
 .form-select {

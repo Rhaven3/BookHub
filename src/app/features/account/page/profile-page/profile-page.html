@@ -87,7 +87,7 @@
             <div>
               <a class="profile-list-item-title" >{{ reservation.book.title }}</a>
               @for ( res of reservation.book.authors ; track res.id) {
-                <p class="profile-list-item-subtitle">{{ res.lname }} {{ res.fname }}</p>
+                <p class="profile-list-item-subtitle">{{ res.lastName }} {{ res.firstName }}</p>
               }
             </div>
             <span class="badge-soft">{{ reservation.registrationDate | date:'dd/MM/yyyy HH:mm' }}</span>
