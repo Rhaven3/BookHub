@@ -88,12 +88,15 @@ export class BookService {
   }
 
   filterBooks(
+    word: string | null,
     authorId: number | null,
     categoryId: number | null,
     editorId: number | null,
     pageable: Pageable,
   ): Observable<ApiResponse<Page<Book>>> {
     let params = new HttpParams().set('page', pageable.page).set('size', pageable.size);
+
+    if (word) { params = params.set('cherche', word);}
 
     if (authorId !== null) {
       params = params.set('authorId', authorId);
@@ -107,6 +110,8 @@ export class BookService {
       params = params.set('editorId', editorId);
     }
 
+    console.log('word =', word);
+    console.log(params.toString());
     return this.http.get<ApiResponse<Page<Book>>>(`${this.baseUrl}/book/filter`, { params });
   }
 }
