@@ -11,12 +11,12 @@ import { DASHBOARD_ROUTES } from './features/dashboard/dashboard.routes';
 import { adminGuard } from './core/guards/admin/admin-guard';
 
 export const routes: Routes = [
-  { path: 'image', component: MainLayout, children: IMAGE_ROUTES, canActivate: [authGuard] },
-  { path: 'account', component: MainLayout, children: PROFILE_ROUTES, canActivate: [authGuard] },
-  { path: 'dashboard', component: MainLayout, children: DASHBOARD_ROUTES, canActivate: [authGuard, adminGuard] },
   { path: 'auth', component: MainLayout, children: AUTH_ROUTES },
-  { path: 'author', component: MainLayout, children: AUTHOR_ROUTES, canActivate: [authGuard] },
+  { path: 'catalogue', component: MainLayout, children: BOOK_ROUTES, canActivate: [authGuard] },
   { path: 'reservations', component: MainLayout, children: RESERVATION_ROUTES, canActivate: [authGuard] },
-  { path: 'book', component: MainLayout, children: BOOK_ROUTES, canActivate: [authGuard] },
-  { path: '', redirectTo: '/image', pathMatch: 'full' },
+  { path: 'account', component: MainLayout, children: PROFILE_ROUTES, canActivate: [authGuard] },
+  { path: 'image', component: MainLayout, children: IMAGE_ROUTES, canActivate: [authGuard] },
+  { path: 'dashboard', component: MainLayout, children: DASHBOARD_ROUTES, canActivate: [authGuard, adminGuard] },
+  { path: 'author', component: MainLayout, children: AUTHOR_ROUTES, canActivate: [authGuard] },
+  { path: '', redirectTo: '/catalogue', pathMatch: 'full' },
 ];
