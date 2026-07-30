@@ -10,24 +10,23 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ApiResponse } from '../../../shared/interfaces/apiResponse';
 
 @Component({
-  selector: 'app-loan-list-page',
+  selector: 'app-delay-list-page',
   standalone: true,
   imports: [RouterLink, DataTable, ColumnDirective, SearchInput],
-  templateUrl: './loan-list-page.html',
-  styleUrl: './loan-list-page.css',
+  templateUrl: './delay-list-page.html',
+  styleUrl: './delay-list-page.css',
 })
-export class LoanListPage {
+export class DelayListPage {
   private loanService = inject(LoanService);
 
   searchTerm = signal('');
 
   columns: TableColumn<LoanResponse>[] = [
-    { key: 'bookTitle', label: 'Livre', sortable: true, width: '22%' },
-    { key: 'userName', label: 'Emprunteur', sortable: true, width: '18%' },
-    { key: 'loanDate', label: 'Date emprunt', sortable: true, width: '15%' },
+    { key: 'userName', label: 'Emprunteur', sortable: true, width: '20%' },
+    { key: 'bookTitle', label: 'Livre', sortable: true, width: '25%' },
     { key: 'expectedReturnDate', label: 'Retour prévu', sortable: true, width: '15%' },
-    { key: 'status', label: 'Statut', width: '13%' },
-    { key: 'actions', label: 'Actions', width: '17%' },
+    { key: 'delay', label: 'Retard', sortable: true, width: '15%' },
+    { key: 'actions', label: 'Actions', width: '25%' },
   ];
 
   loans = signal<(LoanResponse & { bookTitle: string; userName: string })[]>([]);
@@ -38,12 +37,12 @@ export class LoanListPage {
   trackByLoanId = (loan: LoanResponse) => loan.id;
 
   ngOnInit(): void {
-    this.loadLoans();
+    this.loadDelayedLoans();
   }
 
-  private loadLoans(): void {
+  private loadDelayedLoans(): void {
     this.loading.set(true);
-    this.loanService.getAllLoans({ page: 0, size: 200 }).subscribe({
+    this.loanService.getAllLoansDelayed({ page: 0, size: 200 }).subscribe({
       next: (page) => {
         this.loans.set(
           page.content.map((loan) => ({
@@ -62,10 +61,9 @@ export class LoanListPage {
 
   onMarkReturned(loan: LoanResponse): void {
     this.loanService.markAsReturned(loan.id).subscribe({
-      next: (updated) => {
-        this.loans.update((list) =>
-          list.map((l) => (l.id === updated.id ? { ...l, ...updated } : l)),
-        );
+      next: () => {
+        // L'emprunt n'est plus en retard une fois rendu, on le retire de cette liste
+        this.loans.update((list) => list.filter((l) => l.id !== loan.id));
       },
       error: (err: HttpErrorResponse) => {
         const apiError = err.error as ApiResponse<null>;

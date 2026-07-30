@@ -25,7 +25,11 @@ export class LoanService {
       `${this.baseUrl}/loans?page=${pageable.page}&size=${pageable.size}`,
     );
   }
-
+  getAllLoansDelayed(pageable: Pageable): Observable<Page<LoanResponse>> {
+    return this.http.get<Page<LoanResponse>>(
+      `${this.baseUrl}/loans/all-delay?page=${pageable.page}&size=${pageable.size}`,
+    );
+  }
   markAsReturned(id: number): Observable<Loan> {
     return this.http
       .put<ApiResponse<Loan>>(`${this.baseUrl}/loans/${id}/return`, {})

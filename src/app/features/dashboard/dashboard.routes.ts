@@ -4,11 +4,13 @@ import { UserListPage } from '../admin/user-list-page/user-list-page';
 import { BookFormPage } from '../admin/book-form-page/book-form-page';
 import { BookListPage } from '../admin/book-list-page/book-list-page';
 import { LoanListPage } from '../admin/loan-list-page/loan-list-page';
+import { DelayListPage } from '../admin/delay-list-page/delay-list-page';
 
 export const DASHBOARD_ROUTES: Routes = [
   { path: '', component: Dashboard, title: 'Dashboard' },
-  { path: 'list-user', component: UserListPage, title: 'List User' },
-  { path: 'list-book', component: BookListPage, title: 'List Book' },
-  { path: 'list-loan', component: LoanListPage, title: 'List Loan' },
+  { path: 'list-user', component: UserListPage, title: 'Liste des users' },
+  { path: 'list-book', component: BookListPage, title: 'Liste des livres' },
+  { path: 'list-loan', component: LoanListPage, title: 'Liste des emprunts' },
+  { path: 'list-delay', component: DelayListPage, title: 'Liste des retards' },
   { path: 'book-add', component: BookFormPage, title: 'Ajouter un livre' },
 ];

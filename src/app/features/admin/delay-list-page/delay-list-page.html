@@ -5,13 +5,13 @@
       <a routerLink="/dashboard" class="dashboard-back-link">
         ← Retour au dashboard
       </a>
-      <h1 class="section-title">Gestion des emprunts</h1>
+      <h1 class="section-title">Emprunts en retard</h1>
     </div>
   </div>
 
   <div class="flex justify-between w-full">
     <app-search-input
-      placeholder="Rechercher un emprunt..."
+      placeholder="Rechercher un emprunt en retard..."
       (searchChange)="searchTerm.set($event)"
     />
   </div>
@@ -22,28 +22,24 @@
 
   <div class="dashboard-card">
     <app-data-table [data]="loans()" [columns]="columns" [trackBy]="trackByLoanId" [searchTerm]="searchTerm()">
-      <ng-template appColumn="bookTitle" let-loan>{{ loan.bookTitle }}</ng-template>
       <ng-template appColumn="userName" let-loan>{{ loan.userName }}</ng-template>
-      <ng-template appColumn="loanDate" let-loan>{{ loan.loanDate }}</ng-template>
+      <ng-template appColumn="bookTitle" let-loan>{{ loan.bookTitle }}</ng-template>
       <ng-template appColumn="expectedReturnDate" let-loan>{{ loan.expectedReturnDate }}</ng-template>
 
-      <ng-template appColumn="status" let-loan>
-        @if (loan.actualReturnDate) {
-          <span class="badge-soft">Rendu</span>
-        } @else if (loan.delay > 0) {
-          <span class="badge-dark">En retard ({{ loan.delay }}j)</span>
-        } @else {
-          <span class="badge-info">En cours</span>
-        }
+      <ng-template appColumn="delay" let-loan>
+        <span class="badge-dark">{{ loan.delay }} jour(s)</span>
       </ng-template>
 
       <ng-template appColumn="actions" let-loan>
         <div class="flex items-center justify-between">
-          @if (!loan.actualReturnDate) {
-            <button type="button" class="btn-link" (click)="onMarkReturned(loan)">Marquer rendu</button>
-          }
+          <button type="button" class="btn-link" (click)="onMarkReturned(loan)">Marquer rendu</button>
+          <button type="button" class="admin-table-danger-link" (click)="onNotify(loan)">Notifier</button>
         </div>
       </ng-template>
     </app-data-table>
+
+    @if (loans().length === 0 && !loading()) {
+      <p class="dashboard-card-text text-center mt-4">Aucun emprunt en retard actuellement.</p>
+    }
   </div>
 </section>
