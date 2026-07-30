@@ -1,31 +1,35 @@
-<h2 class="text-2xl font-semibold mb-6">
-  {{ isEditMode ? 'Edit author' : 'Create author' }}
-</h2>
+  <h2 class="text-2xl font-semibold mb-6">
+    {{ isEditMode ? 'Edit author' : 'Create author' }}
+  </h2>
 
-<form [formGroup]="authorForm" (ngSubmit)="onSubmit()" )
-      class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+  <form [formGroup]="authorForm" (ngSubmit)="onSubmit()" )
+        class="max-w-md mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
 
-  <div class="flex flex-col gap-2">
-    <label for="text" class="text-sm font-medium text-gray-700">Prénom</label>
-    <input type="text" id="text" formControlName="fname"
-           class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
-           placeholder="Saisissez un prénom"
-    />
-  </div>
+    <div class="flex flex-col gap-2">
+      <label for="text" class="text-sm font-medium text-gray-700">Prénom</label>
+      <input type="text" id="text" formControlName="firstName"
+             class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
+             placeholder="Saisissez un prénom"
+      />
+    </div>
 
-  <div class="flex flex-col gap-2">
-    <label for="text" class="text-sm font-medium text-gray-700">Nom</label>
-    <input type="text" id="text" formControlName="lname"
-           class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
-           placeholder="Saisissez un nom"
-    />
-  </div>
+    <div class="flex flex-col gap-2">
+      <label for="text" class="text-sm font-medium text-gray-700">Nom</label>
+      <input type="text" id="text" formControlName="lastName"
+             class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none transition"
+             placeholder="Saisissez un nom"
+      />
+    </div>
 
 
-  <div>
-    <button type="submit" class="btn-primary" [disabled]="authorForm.invalid">
-      {{ isEditMode ? 'Update' : 'Create' }}
-    </button>
-
-  </div>
-</form>
+    <div class="flex items-center gap-3 justify-end">
+      @if (cancelRoute()) {
+        <a [routerLink]="cancelRoute()" class="btn-secondary no-underline">Annuler</a>
+      } @else {
+        <button type="button" class="btn-secondary" (click)="onCancel()">Annuler</button>
+      }
+      <button type="submit" class="btn-primary" [disabled]="authorForm.invalid">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>

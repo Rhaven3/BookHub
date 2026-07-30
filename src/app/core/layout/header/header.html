@@ -3,7 +3,7 @@
 
   <nav class="app-header-nav">
     @if (isAuthenticated()) {
-      <a routerLink="/emprunts" class="btn-secondary">Mes emprunts</a>
+      <a routerLink="/loans" class="btn-secondary">Mes emprunts</a>
       <a routerLink="/reservations" class="btn-secondary">Mes réservations</a>
       @if (user()?.role === 'ADMIN') {
         <a routerLink="/dashboard" class="btn-secondary">Dashboard</a>

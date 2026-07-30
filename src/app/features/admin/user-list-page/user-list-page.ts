@@ -44,7 +44,6 @@ export class UserListPage implements OnInit {
   isEditModalOpen = signal(false);
   isCreateModalOpen = signal(false);
 
-  userToCreate = signal<UpdateProfileRequest | null>(null);
   userToEdit = signal<AdminUser | null>(null);
 
   trackByUserId = (user: AdminUser) => user.id;
