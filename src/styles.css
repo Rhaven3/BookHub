@@ -451,3 +451,12 @@
     @apply max-w-6xl mx-auto px-4 py-10 flex flex-col gap-6;
   }
 }
+.dashboard-back-link {
+  @apply inline-flex items-center gap-1 text-sm mb-4;
+  color: var(--color-clay);
+}
+
+.dashboard-back-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}

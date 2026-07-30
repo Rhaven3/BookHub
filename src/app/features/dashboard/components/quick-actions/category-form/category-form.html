@@ -1,6 +1,6 @@
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container" novalidate>
 
-  <div class="grid grid-cols-2 gap-4">
+
     <app-form-input
       formControlName="name"
       label="Nom"
@@ -9,7 +9,6 @@
       requiredMessage="La catégorie est requiss."
       patternMessage="La catégorie ne doit contenir que des lettres."
     />
-  </div>
 
   <div class="flex items-center gap-3 justify-end">
     @if (cancelRoute()) {
