@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { ApiResponse } from '../../../shared/interfaces/apiResponse';
 import { AuthResponse, CurrentUser, LoginRequest, RegisterRequest } from '../auth.interface';
 import { ENVIRONMENT } from '../../../environments/environment';
+import { NotificationService } from '../../notification/service/notification-service';
 
 /** temps avant le refresh Auto du token */
 const REFRESH_MARGIN_MS = 30_000;
@@ -24,7 +25,8 @@ const REFRESH_MARGIN_MS = 30_000;
 })
 export class Auth {
   private http = inject(HttpClient);
-  private router = inject(Router);
+  private router = inject(Router)
+  private notificationService = inject(NotificationService);
   //Base url pour les appels API
   private baseUrl = ENVIRONMENT.apiUrl;
 
@@ -53,7 +55,17 @@ export class Auth {
   login(dto: LoginRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.baseUrl}/auth/login`, dto, { withCredentials: true })
-      .pipe(tap((response) => this.setSession(response)));
+      .pipe(tap((response) => {
+        localStorage.setItem('token', response.accessToken);
+        this.setSession(response);
+        // on lance la connexion WebSocket
+        this.notificationService.connect(response.accessToken);
+
+        // et on charge l'historique des non-lues via REST
+        this.notificationService.getAllMeNotification().subscribe((notifs) => {
+          this.notificationService.setInitialNotifications(notifs.data);
+        });
+      }));
   }
 
   register(dto: RegisterRequest): Observable<ApiResponse<void>> {
@@ -102,6 +114,7 @@ export class Auth {
       // Même en cas d'erreur serveur, on nettoie quand même la session locale
       error: () => this.clearSession(),
     });
+    this.notificationService.disconnect();
   }
 
   /** Permet de set les nouvelles informations du user lors d'un EDIT */

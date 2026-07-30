@@ -1,15 +1,13 @@
-import { Component, computed, inject, Input, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { combineLatest, switchMap } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ImageService } from '../../service/image-service';
-import { NgOptimizedImage } from '@angular/common';
-import { Page } from '../../../../shared/interfaces/page';
 import { ImageInterface } from '../../image.interface';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-image',
-  imports: [NgOptimizedImage, FormsModule],
+  imports: [FormsModule],
   templateUrl: './list-image.html',
   styleUrl: './list-image.css',
 })
