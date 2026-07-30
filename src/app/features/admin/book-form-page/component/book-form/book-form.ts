@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { input, output } from '@angular/core';
 import { FormInput } from '../../../../../shared/components/form-input/form-input';
 import {
@@ -22,7 +22,7 @@ import { ApiResponse } from '../../../../../shared/interfaces/apiResponse';
 
 @Component({
   selector: 'app-book-form',
-  imports: [ReactiveFormsModule, RouterLink, FormInput, MultiSelect, FormAddImage, FormAddImage],
+  imports: [ReactiveFormsModule, FormInput, MultiSelect, FormAddImage, FormAddImage],
   templateUrl: './book-form.html',
   styleUrl: './book-form.css',
 })

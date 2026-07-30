@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { ReservationService } from '../../service/reservation-service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
@@ -36,6 +36,16 @@ export class ListReservation {
     { initialValue: [] },
   );
 
+  getImageUrl(path: string): string {
+    return this.imageService.getImageUrl(path);
+  }
+
+  constructor() {
+    effect(() => {
+      console.log('Réservations mises à jour :', this.reservations());
+    });
+  }
+
   cancelRes(id: number) {
     this.reservationService
       .cancelReservation(id)
@@ -50,9 +60,5 @@ export class ListReservation {
         }),
       )
       .subscribe();
-  }
-
-  getImageUrl(path: string): string {
-    return this.imageService.getImageUrl(path);
   }
 }

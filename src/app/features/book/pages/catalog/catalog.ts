@@ -9,10 +9,12 @@ import { Category } from '../../../category/category.interface';
 import { Author } from '../../../author/author.interface';
 import { Editor } from '../../../editor/editor.interface';
 import { LoanService } from '../../../loan/services/loan';
+import { ImageService } from '../../../image/service/image-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
-  imports: [BookFilter],
+  imports: [BookFilter, RouterLink],
   templateUrl: './catalog.html',
   styleUrl: './catalog.css',
 })
@@ -21,6 +23,7 @@ export class Catalog {
   private authorService = inject(AuthorService);
   private categoryService = inject(CategoryService);
   private editorService = inject(EditorService);
+  private imageService = inject(ImageService);
 
   books = signal<Book[]>([]);
 
@@ -104,5 +107,9 @@ export class Catalog {
   reserve(book: Book): void {
     console.log('Réservation demandée', book.id);
     // appel ReservationService
+  }
+
+  getImageUrl(path: string): string {
+    return this.imageService.getImageUrl(path);
   }
 }

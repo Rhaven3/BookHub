@@ -2,7 +2,6 @@ import { Component, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Modal } from '../../../../shared/components/modal/modal';
 import { AuthorForm } from './author-form/author-form';
-import { Category } from '../../../category/category.interface';
 import { CategoryService } from '../../../category/services/category';
 import { CategoryForm } from './category-form/category-form';
 import { RegisterForm } from '../../../../shared/components/register-form/register-form';
@@ -15,7 +14,7 @@ import { BookForm } from '../../../admin/book-form-page/component/book-form/book
 @Component({
   selector: 'app-quick-actions',
   standalone: true,
-  imports: [RouterLink, Modal, AuthorForm, CategoryForm, RegisterForm, BookForm],
+  imports: [ Modal, AuthorForm, CategoryForm, RegisterForm, BookForm],
   templateUrl: './quick-actions.html',
   styleUrl: './quick-actions.css',
 })

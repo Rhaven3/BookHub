@@ -7,5 +7,5 @@ export const BOOK_ROUTES: Routes = [
     path: '',
     component: Catalog,
   },
-  { path: 'book', component: DetailBook , title : "Page detail d'un livre"},
+  { path: 'book/:id', component: DetailBook, title: "Page detail d'un livre" },
 ];

@@ -6,10 +6,10 @@
 
         <!-- Image -->
         <div class="w-28 h-40 shrink-0 overflow-hidden rounded-lg border border-gray-200">
-          @if (reservation.book?.images?.length) {
+          @if (reservation.book?.images?.[0]; as cover) {
             <img
-              [src]="getImageUrl(reservation.book.images[0].path)"
-              [alt]="reservation.book.images[0].name"
+              [src]="getImageUrl(cover.path)"
+              [alt]="cover.name"
               class="w-full h-full object-cover">
           } @else {
             <img
@@ -26,11 +26,13 @@
           <div class="flex items-start justify-between gap-4">
             <div>
               <h2 class="text-xl font-semibold">{{ reservation.book.title }}</h2>
+
               @for (res of reservation.book.authors; track res.id) {
                 <p class="text-sm text-gray-500">
                   {{ res.firstName }} {{ res.lastName }}
                 </p>
               }
+
               <div class="mt-2 flex items-center gap-2">
               <span class="text-sm text-gray-500">
                 Statut :
@@ -66,7 +68,7 @@
           </p>
 
           <div class="flex flex-wrap gap-2 mt-3">
-            <a routerLink="" class="btn-primary">
+            <a [routerLink]="['/catalogue/book', reservation.book.id]" class="btn-primary">
               Voir le livre
             </a>
             @if (reservation.status !== 'CANCELED') {

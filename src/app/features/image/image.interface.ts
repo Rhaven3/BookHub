@@ -1,5 +1,5 @@
 export interface ImageInterface{
-  id? : number
+  id : number
   path : string
   name : string
 }
