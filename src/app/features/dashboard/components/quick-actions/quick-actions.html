@@ -4,20 +4,44 @@
   </div>
 
   <div class="quick-actions-grid">
-    <a routerLink="/dashboard/books/new" class="quick-action">
-      <span class="quick-action-label">Ajouter un livre</span>
-    </a>
-
-    <a routerLink="/dashboard/authors/new" class="quick-action">
-      <span class="quick-action-label">Ajouter un auteur</span>
-    </a>
-
-    <a routerLink="/dashboard/categories/new" class="quick-action">
-      <span class="quick-action-label">Ajouter une catégorie</span>
-    </a>
-
-    <a routerLink="/dashboard/users/new" class="quick-action">
-      <span class="quick-action-label">Ajouter un adhérent</span>
-    </a>
+    <button (click)="onCreateBook()" class="quick-action">
+      Ajouter un livre
+    </button>
+    <button (click)="onCreateAuthor()" class="quick-action">
+      Ajouter un auteur
+    </button>
+    <button (click)="onCreateCategory()" class="quick-action">
+      Ajouter une catégorie
+    </button>
+    <button (click)="onCreateUser()" class="quick-action">
+      Ajouter un utilisateur
+    </button>
   </div>
+
+  <app-modal [isOpen]="isCreateAuthorModalOpen()" title="Ajouter un nouvel auteur" (closeModal)="closeCreateAuthorModal()">
+    <app-author-form
+      [cancelRoute]="null"
+      (cancel)="closeCreateAuthorModal()"
+    />
+  </app-modal>
+  <app-modal [isOpen]="isCreateCategoryModalOpen()" title="Ajouter une nouvelle catégorie" (closeModal)="closeCreateCategoryModal()">
+    <app-category-form
+      [cancelRoute]="null"
+      (cancel)="closeCreateCategoryModal()"
+      (submitForm)="closeCreateCategoryModal()"
+    />
+  </app-modal>
+  <app-modal [isOpen]="isCreateUserModalOpen()" title="Ajouter un nouvel utilisateur" (closeModal)="closeCreateUserModal()">
+    <app-register-form
+      [cancelRoute]="null"
+      (cancel)="closeCreateUserModal()"
+      (submitForm)="onCreateUserSubmit($event)"
+    />
+  </app-modal>
+    <app-modal [isOpen]="isCreateBookModalOpen()"   [title]="isEditBook() ? 'Modifier le livre' : 'Ajouter un livre'" (closeModal)="closeCreateBookModal()">
+      <app-book-form
+        [cancelRoute]="null"
+        (cancel)="closeCreateBookModal()"
+      />
+    </app-modal>
 </div>

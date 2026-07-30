@@ -1,0 +1,24 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form-container" novalidate>
+
+  <div class="grid grid-cols-2 gap-4">
+    <app-form-input
+      formControlName="name"
+      label="Nom"
+      filter="letters"
+      autocomplete="given-name"
+      requiredMessage="La catégorie est requiss."
+      patternMessage="La catégorie ne doit contenir que des lettres."
+    />
+  </div>
+
+  <div class="flex items-center gap-3 justify-end">
+    @if (cancelRoute()) {
+      <a [routerLink]="cancelRoute()" class="btn-secondary no-underline">Annuler</a>
+    } @else {
+      <button type="button" class="btn-secondary" (click)="onCancel()">Annuler</button>
+    }
+    <button type="submit" class="btn-primary" [disabled]="loading()">
+      {{ loading() ? 'Enregistrement...' : (isEditMode ? 'Update' : 'Create') }}
+    </button>
+  </div>
+</form>

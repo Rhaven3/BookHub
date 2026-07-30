@@ -6,7 +6,7 @@ import { ENVIRONMENT } from '../../../environments/environment';
 import { Pageable } from '../../../shared/interfaces/pageable';
 import { Page } from '../../../shared/interfaces/page';
 
-import { Category } from '../category.interface';
+import { Category, CategoryRequest } from '../category.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -31,11 +31,11 @@ export class CategoryService {
     return this.http.get<Category>(`${this.baseUrl}/category/${id}`);
   }
 
-  createCategory(category: Category): Observable<Category> {
+  createCategory(category: CategoryRequest): Observable<Category> {
     return this.http.post<Category>(`${this.baseUrl}/category`, category);
   }
 
-  updateCategory(id: number, category: Category): Observable<Category> {
+  updateCategory(id: number, category: CategoryRequest): Observable<Category> {
     return this.http.put<Category>(`${this.baseUrl}/category/${id}`, category);
   }
 
