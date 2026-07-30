@@ -6,7 +6,7 @@
   </a>
 
   <!-- Titre -->
-  <h1 class="text-4xl font-semibold">{{bookSelected()?.title}}</h1>
+  <h1 class="text-4xl font-semibold">{{ bookSelected()?.title }}</h1>
 
   <!-- ========================= -->
   <!-- Informations principales -->
@@ -46,7 +46,7 @@
     <div class="flex-1 flex flex-col">
 
       <div class="flex flex-wrap items-center gap-3 mb-4">
-        @if ( bookSelected()?.available ){
+        @if (bookSelected()?.available) {
           <span class="badge-dark"> Disponible </span>
         } @else {
           <span class="badge-dark"> Non disponible </span>
@@ -55,7 +55,7 @@
         <span class="badge-info">Langue : {{ bookSelected()?.language }} </span>
       </div>
 
-      <h2 class="text-3xl font-semibold text-[var(--color-primary)]">{{bookSelected()?.title}}</h2>
+      <h2 class="text-3xl font-semibold text-[var(--color-primary)]">{{ bookSelected()?.title }}</h2>
 
       <div class="grid md:grid-cols-2 gap-4 mt-8">
 
@@ -65,7 +65,7 @@
           </p>
           @for (author of bookSelected()?.authors; track author.id) {
             <p class="font-medium">
-              {{ author.fname }} {{ author.lname}}
+              {{ author.fname }} {{ author.lname }}
             </p>
           }
         </div>
@@ -106,9 +106,9 @@
         <div class="flex items-center justify-between">
           <div>
             @if (bookSelected()?.available) {
-            <p class="font-semibold">
-              Disponible immédiatement
-            </p>
+              <p class="font-semibold">
+                Disponible immédiatement
+              </p>
             } @else {
               <p class="text-sm text-gray-600">
                 Vous pouvez réserver ce livre dès maintenant.
@@ -142,7 +142,7 @@
       Résumé
     </h2>
 
-    <p class="leading-7 text-gray-700"> {{ bookSelected()?.description}} </p>
+    <p class="leading-7 text-gray-700"> {{ bookSelected()?.description }} </p>
 
   </section>
 
@@ -181,28 +181,42 @@
   <!-- ========================= -->
   <!-- Suggestions -->
   <!-- ========================= -->
+  @if (bookByCategory().length < 0) {
+    <section>
 
-  <section>
+      <h2 class="text-2xl font-semibold mb-4">
+        Suggestions
+      </h2>
 
-    <h2 class="text-2xl font-semibold mb-4">
-      Suggestions
-    </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+        @for (otherBook of bookByCategory(); track otherBook.id) {
 
-      <div class="card h-56"></div>
+          <a [routerLink]="['/catalogue/book/', otherBook.id]" class="block">
 
-      <div class="card h-56"></div>
+            <div class="aspect-square overflow-hidden rounded-xl shadow-md">
+              @if (otherBook.images?.length) {
+                <img
+                  [src]="getImageUrl(otherBook.images[0].path)"
+                  [alt]="otherBook.title"
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+              } @else {
+                <img
+                  src="https://placehold.co/300x300"
+                  alt="Pas de couverture"
+                  class="w-full h-full object-cover">
+              }
+            </div>
 
-      <div class="card h-56"></div>
+            <h3 class="mt-2 text-center font-semibold text-sm line-clamp-2">
+              {{ otherBook.title }}
+            </h3>
+          </a>
+        }
+      </div>
 
-      <div class="card h-56"></div>
-
-      <div class="card h-56"></div>
-
-    </div>
-
-  </section>
+    </section>
+  }
 
   <!-- ========================= -->
   <!-- Même auteur -->
@@ -214,18 +228,30 @@
       Livres du même auteur
     </h2>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      @for (otherBook of bookByEditor(); track otherBook.id) {
+        <a [routerLink]="['/catalogue/book/', otherBook.id]">
+          <div class="flex flex-col">
+            <div class="aspect-square overflow-hidden rounded-xl shadow-md">
+              @if (otherBook.images?.length) {
+                <img
+                  [src]="getImageUrl(otherBook.images[0].path)"
+                  [alt]="otherBook.images[0].name"
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"/>
+              } @else {
+                <img
+                  src="https://placehold.co/300x300"
+                  alt="Aucune couverture"
+                  class="w-full h-full object-cover"/>
+              }
+            </div>
 
-      <div class="card h-56"></div>
-
-      <div class="card h-56"></div>
-
-      <div class="card h-56"></div>
-
-      <div class="card h-56"></div>
-
-      <div class="card h-56"></div>
-
+            <h3 class="mt-2 text-center font-semibold text-sm line-clamp-2">
+              {{ otherBook.title }}
+            </h3>
+          </div>
+        </a>
+      }
     </div>
 
   </section>

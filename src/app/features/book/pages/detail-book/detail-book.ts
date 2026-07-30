@@ -2,13 +2,14 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BookService } from '../../services/book';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ImageService } from '../../../image/service/image-service';
 import { Book } from '../../book.interface';
 import { LoanService } from '../../../loan/services/loan';
 import { FlashMessageService } from '../../../../core/services/flashMessage/flash-message-service';
 import { ReservationService } from '../../../reservation/service/reservation-service';
+import { Pageable } from '../../../../shared/interfaces/pageable';
 
 @Component({
   selector: 'app-detail-book',
@@ -26,16 +27,40 @@ export class DetailBook {
   private route = inject(ActivatedRoute);
   private refreshTrigger = signal(0);
 
-  private id$ = this.route.paramMap.pipe(map((params) => Number(params.get('id') ?? 0)));
+  private bookId$ = this.route.paramMap.pipe(map((params) => Number(params.get('id') ?? 0)));
 
   bookSelected = toSignal(
     toObservable(this.refreshTrigger).pipe(
       switchMap(() =>
-        this.id$.pipe(
+        this.bookId$.pipe(
           switchMap((id) => this.bookService.getBookById(id).pipe(map((res) => res.data))),
         ),
       ),
     ),
+  );
+
+  bookByEditor = toSignal(
+    this.bookId$.pipe(
+      switchMap((id) => this.bookService.getBookById(id)),
+      switchMap((res) =>
+        this.bookService.getBooksByEditor(res.data.editor.id, { page: 0, size: 5 }),
+      ),
+      map((res) => res.data.content),
+    ),
+    { initialValue: [] },
+  );
+
+  bookByCategory = toSignal(
+    toObservable(this.bookSelected).pipe(
+      filter((book) => !!book?.categories?.length),
+      switchMap((book) =>
+        this.bookService.getBooksByCategory(book!.categories[0].id, { page: 0, size: 5 }),
+      ),
+      map((res) =>
+        res.data.content.filter((otherBook) => otherBook.id !== this.bookSelected()?.id),
+      ),
+    ),
+    { initialValue: [] },
   );
 
   getImageUrl(path: string): string {
