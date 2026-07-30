@@ -15,12 +15,15 @@ export class BookFilter {
   @Input() authors: Author[] = [];
   @Input() categories: Category[] = [];
   @Input() editors: Editor[] = [];
+  searchWord = '';
 
   @Output() filterChange = new EventEmitter<{
+    word: string | null;
     authorId: number | null;
     categoryId: number | null;
     editorId: number | null;
   }>();
+
 
   selectedAuthor: number | null = null;
   selectedCategory: number | null = null;
@@ -28,6 +31,7 @@ export class BookFilter {
 
   onFilterChange(): void {
     this.filterChange.emit({
+      word: this.searchWord.trim() || null,
       authorId: this.selectedAuthor,
       categoryId: this.selectedCategory,
       editorId: this.selectedEditor,
