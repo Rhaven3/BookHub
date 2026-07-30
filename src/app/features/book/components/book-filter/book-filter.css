@@ -1,9 +1,12 @@
 @reference "../../../../../styles.css";
 
-@reference "../../../../../styles.css";
-
 .book-filter {
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
 }
 
 .filters-grid {
