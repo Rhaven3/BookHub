@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { ApiResponse } from '../../../shared/interfaces/apiResponse';
 import { AuthResponse, CurrentUser, LoginRequest, RegisterRequest } from '../auth.interface';
 import { ENVIRONMENT } from '../../../environments/environment';
+import { AdminUser } from '../../admin/admin.interface';
 import { NotificationService } from '../../notification/service/notification-service';
 
 /** temps avant le refresh Auto du token */
@@ -68,8 +69,10 @@ export class Auth {
       }));
   }
 
-  register(dto: RegisterRequest): Observable<ApiResponse<void>> {
-    return this.http.post<ApiResponse<void>>(`${this.baseUrl}/auth/register`, dto);
+  register(dto: RegisterRequest): Observable<AdminUser> {
+    return this.http
+      .post<ApiResponse<AdminUser>>(`${this.baseUrl}/auth/register`, dto)
+      .pipe(map((response) => response.data));
   }
 
   /**

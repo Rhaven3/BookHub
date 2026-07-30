@@ -46,6 +46,10 @@ export class DataTable<T> implements AfterContentInit {
   /** Nombre de lignes affichées par page (10 par défaut) */
   pageSize = input(10);
 
+  /** Terme de recherche (fourni par un <app-search-input> externe) —
+   *  filtre sur toutes les propriétés de chaque ligne, converties en texte. */
+  searchTerm = input('');
+
   /** Fonction d'identification unique par ligne via champ `id`.
    *  Utilisée par @for(... track ...) pour qu'Angular ne recrée pas
    *  inutilement les <tr> quand seul l'ordre change (tri/pagination). */
@@ -69,6 +73,23 @@ export class DataTable<T> implements AfterContentInit {
   // template via getTemplate(key), plutôt que de reparcourir la liste à chaque render.
   private templateMap = new Map<string, TemplateRef<unknown>>();
 
+  /** Données filtrées selon searchTerm() — recherche insensible à la casse
+   *  sur toutes les valeurs de chaque ligne. Recalculé automatiquement dès
+   *  que data() ou searchTerm() changent. */
+  filteredData = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const rows = this.data();
+
+    if (!term) return rows;
+
+    return rows.filter((row) =>
+      Object.values(row as Record<string, unknown>).some((value) =>
+        String(value ?? '')
+          .toLowerCase()
+          .includes(term),
+      ),
+    );
+  });
   /**
    * Données triées selon sortKey/sortDirection.
    * Recalculé automatiquement (grâce à computed()) dès que data(), sortKey()
@@ -77,7 +98,7 @@ export class DataTable<T> implements AfterContentInit {
   sortedData = computed(() => {
     const key = this.sortKey();
     const direction = this.sortDirection();
-    const rows = this.data();
+    const rows = this.filteredData();
 
     // Aucun tri actif : on retourne les données telles quelles
     if (!key) return rows;
@@ -120,6 +141,7 @@ export class DataTable<T> implements AfterContentInit {
     // à l'intérieur (data, sortKey, sortDirection) change de valeur.
     effect(() => {
       this.data();
+      this.searchTerm();
       this.sortKey();
       this.sortDirection();
       this.currentPage.set(1);
