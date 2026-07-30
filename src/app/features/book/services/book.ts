@@ -29,6 +29,11 @@ export class BookService {
       `${this.baseUrl}/book?page=${pageable.page}&size=${pageable.size}`,
     );
   }
+  getListBooks(pageable: Pageable): Observable<Page<Book>> {
+    return this.http
+      .get<ApiResponse<Page<Book>>>(`${this.baseUrl}/book?page=${pageable.page}&size=${pageable.size}`)
+      .pipe(map((response) => response.data));
+  }
 
   getBookById(id: number): Observable<Book> {
     return this.http
