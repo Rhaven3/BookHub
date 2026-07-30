@@ -6,4 +6,5 @@ export const BOOK_ROUTES: Routes = [
     path: '',
     component: Catalog,
   },
+
 ];

@@ -25,6 +25,9 @@
   border-radius: .75rem;
   box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
   transition: transform .2s ease;
+
+  text-decoration: none;
+  color: inherit;
 }
 
 .book-card:hover {
