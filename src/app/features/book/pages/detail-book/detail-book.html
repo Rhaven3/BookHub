@@ -6,7 +6,7 @@
   </a>
 
   <!-- Titre -->
-  <h1 class="text-4xl font-semibold">{{book()?.title}}</h1>
+  <h1 class="text-4xl font-semibold">{{bookSelected()?.title}}</h1>
 
   <!-- ========================= -->
   <!-- Informations principales -->
@@ -20,21 +20,21 @@
       <!-- Image principale -->
       <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
         <img
-          [src]="book()?.images?.[0]?.path ? getImageUrl(book()!.images[0].path) : 'https://placehold.co/350x500'"
-          [alt]="book()?.images?.[0]?.name ?? 'Le livre n\'a pas d\'image disponible.'"
+          [src]="bookSelected()?.images?.[0]?.path ? getImageUrl(bookSelected()!.images[0].path) : 'https://placehold.co/350x500'"
+          [alt]="bookSelected()?.images?.[0]?.name ?? 'Le livre n\'a pas d\'image disponible.'"
           class="w-full aspect-[3/4] object-cover">
       </div>
 
       <!-- Galerie -->
       <div class="grid grid-cols-4 gap-2 mt-3">
 
-        @if (book()?.images) {
-          @for (bo of book()?.images; track bo.id) {
+        @if (bookSelected()?.images) {
+          @for (bo of bookSelected()?.images; track bo.id) {
             <button
               class="overflow-hidden rounded-lg border-2 border-[var(--color-terracotta)]">
               <img
-                [src]="book()?.images?.[0]?.path ? getImageUrl(book()!.images[0].path) : 'https://placehold.co/350x500'"
-                [alt]="book()?.images?.[0]?.name ?? 'Le livre n\'a pas d\'image disponible.'"
+                [src]="bookSelected()?.images?.[0]?.path ? getImageUrl(bookSelected()!.images[0].path) : 'https://placehold.co/350x500'"
+                [alt]="bookSelected()?.images?.[0]?.name ?? 'Le livre n\'a pas d\'image disponible.'"
                 class="w-full aspect-[3/4] object-cover">
             </button>
           }
@@ -46,12 +46,16 @@
     <div class="flex-1 flex flex-col">
 
       <div class="flex flex-wrap items-center gap-3 mb-4">
-        <span class="badge-dark"> {{ book()?.available }} </span>
-        <span class="badge-soft">ISBN : {{ book()?.isbn }}</span>
-        <span class="badge-info">Langue : {{ book()?.language }} </span>
+        @if ( bookSelected()?.available ){
+          <span class="badge-dark"> Disponible </span>
+        } @else {
+          <span class="badge-dark"> Non disponible </span>
+        }
+        <span class="badge-soft">ISBN : {{ bookSelected()?.isbn }}</span>
+        <span class="badge-info">Langue : {{ bookSelected()?.language }} </span>
       </div>
 
-      <h2 class="text-3xl font-semibold text-[var(--color-primary)]">{{book()?.title}}</h2>
+      <h2 class="text-3xl font-semibold text-[var(--color-primary)]">{{bookSelected()?.title}}</h2>
 
       <div class="grid md:grid-cols-2 gap-4 mt-8">
 
@@ -59,7 +63,7 @@
           <p class="text-xs uppercase text-gray-500">
             Auteur
           </p>
-          @for (author of book()?.authors; track author.id) {
+          @for (author of bookSelected()?.authors; track author.id) {
             <p class="font-medium">
               {{ author.fname }} {{ author.lname}}
             </p>
@@ -71,7 +75,7 @@
             Éditeur
           </p>
           <p class="font-medium">
-            {{ book()?.editor?.name }}
+            {{ bookSelected()?.editor?.name }}
           </p>
         </div>
 
@@ -79,7 +83,7 @@
           <p class="text-xs uppercase text-gray-500">
             Catégorie
           </p>
-          @for (cate of book()?.categories; track cate.id) {
+          @for (cate of bookSelected()?.categories; track cate.id) {
             <p class="font-medium">
               {{ cate.name }}
             </p>
@@ -91,7 +95,7 @@
             Date de publication
           </p>
           <p class="font-medium">
-            {{ book()?.publishDate | date:'dd/MM/yyyy' }}
+            {{ bookSelected()?.publishDate | date:'dd/MM/yyyy' }}
           </p>
         </div>
 
@@ -101,7 +105,7 @@
 
         <div class="flex items-center justify-between">
           <div>
-            @if (book()?.available) {
+            @if (bookSelected()?.available) {
             <p class="font-semibold">
               Disponible immédiatement
             </p>
@@ -111,13 +115,12 @@
               </p>
             }
           </div>
-
-          @if (book()?.available) {
-            <button class="btn-primary">
+          @if (bookSelected()?.available) {
+            <button class="btn-primary" (click)="borrow(bookSelected()!)">
               Emprunter
             </button>
           } @else {
-            <button class="btn-primary">
+            <button class="btn-primary" (click)="reserve(bookSelected()!)">
               Réserver
             </button>
           }
@@ -139,7 +142,7 @@
       Résumé
     </h2>
 
-    <p class="leading-7 text-gray-700"> {{ book()?.description}} </p>
+    <p class="leading-7 text-gray-700"> {{ bookSelected()?.description}} </p>
 
   </section>
 

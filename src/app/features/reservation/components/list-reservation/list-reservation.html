@@ -6,10 +6,10 @@
 
         <!-- Image -->
         <div class="w-28 h-40 shrink-0 overflow-hidden rounded-lg border border-gray-200">
-          @if (reservation.book?.images?.length) {
+          @if (reservation.book?.images?.[0]; as cover) {
             <img
-              [src]="getImageUrl(reservation.book.images[0].path)"
-              [alt]="reservation.book.images[0].name"
+              [src]="getImageUrl(cover.path)"
+              [alt]="cover.name"
               class="w-full h-full object-cover">
           } @else {
             <img

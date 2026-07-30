@@ -8,8 +8,8 @@
     <div class="books-grid">
       @for (book of books(); track book.id) {
         <article class="book-card">
-          <a href="#" class="book-link">
-            <img src="/images/livre-exemple.jpg" alt="Couverture de {{ book.title }}" class="book-cover">
+          <a [routerLink]="['book/', book.id]" class="book-link">
+            <img [src]="getImageUrl( book.images[0].path )" alt="Couverture de {{ book.title }}" class="book-cover">
 
             <div class="book-info">
               <h2>{{ book.title }}</h2>

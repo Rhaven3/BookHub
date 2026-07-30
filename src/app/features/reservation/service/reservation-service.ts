@@ -20,9 +20,11 @@ export class ReservationService {
     );
   }
 
+  createReservation(bookId: number): Observable<ApiResponse<Reservation>> {
+    return this.http.post<ApiResponse<Reservation>>(`${this.baseUrl}/reservations}`, bookId);
+  }
+
   cancelReservation(id: number): Observable<ApiResponse<Reservation>> {
-    return this.http.delete<ApiResponse<Reservation>>(
-      `${this.baseUrl}/reservations/${id}`,
-    );
+    return this.http.delete<ApiResponse<Reservation>>(`${this.baseUrl}/reservations/${id}`);
   }
 }
