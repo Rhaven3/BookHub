@@ -1,4 +1,4 @@
-import { Component, inject, Signal, signal } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BookService } from '../../services/book';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -11,6 +11,7 @@ import { FlashMessageService } from '../../../../core/services/flashMessage/flas
 import { ReservationService } from '../../../reservation/service/reservation-service';
 import { RatingInterface } from '../../../rating/rating.interface';
 import { RatingService } from '../../../rating/service/rating-service';
+import { ImageInterface } from '../../../image/image.interface';
 
 @Component({
   selector: 'app-detail-book',
@@ -25,9 +26,17 @@ export class DetailBook {
   private ratingService = inject(RatingService);
   private reservationService = inject(ReservationService);
   private flashMessage = inject(FlashMessageService);
-  //private ratingService = inject(RatingService);
   private route = inject(ActivatedRoute);
   private refreshTrigger = signal(0);
+
+  selectedImage = signal<ImageInterface | null>(null);
+
+  selectImage(image: ImageInterface): void {
+    this.selectedImage.set(image);
+  }
+  mainImage = computed(() => {
+    return this.selectedImage() ?? this.bookSelected()?.images?.[0] ?? null;
+  });
 
   private bookId$ = this.route.paramMap.pipe(map((params) => Number(params.get('id') ?? 0)));
 

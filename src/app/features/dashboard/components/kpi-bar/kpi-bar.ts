@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Book } from '../../../book/book.interface';
 
 @Component({
   selector: 'app-kpi-bar',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './kpi-bar.html',
   styleUrl: './kpi-bar.css',
 })
-export class KpiBar {}
+export class KpiBar {
+  totalBooks = input.required<number>();
+}

@@ -40,12 +40,6 @@ export class ListReservation {
     return this.imageService.getImageUrl(path);
   }
 
-  constructor() {
-    effect(() => {
-      console.log('Réservations mises à jour :', this.reservations());
-    });
-  }
-
   cancelRes(id: number) {
     this.reservationService
       .cancelReservation(id)

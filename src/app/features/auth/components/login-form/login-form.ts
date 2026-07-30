@@ -33,8 +33,8 @@ export class LoginForm {
   constructor(private fb: FormBuilder) {
     // FormBuilder.group() construit un FormGroup : chaque clé est un FormControl avec sa valeur initiale et ses validators
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      email: ['admin@bookhub.fr', [Validators.required, Validators.email]],
+      password: ['Admin123!', [Validators.required]],
     });
   }
 
