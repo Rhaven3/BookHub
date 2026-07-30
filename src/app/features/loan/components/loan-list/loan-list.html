@@ -1,0 +1,119 @@
+@if (loans()) {
+  <div class="max-w-6xl mx-auto p-6 space-y-5">
+
+    <div class="loan-filter">
+      <div class="filters-grid">
+        <div class="filter">
+          <label class="form-label">Date d'emprunt</label>
+          <input type="date" class="form-control" [(ngModel)]="selectedDate" (change)="refresh()">
+        </div>
+
+        <div class="filter">
+          <label class="form-label">Statut</label>
+          <select class="form-select" [(ngModel)]="selectedStatus" (change)="refresh()">
+            <option value="">Tous</option>
+            <option value="IN_PROGRESS">En cours</option>
+            <option value="RETURNED">Retourné</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    @for (loan of loans(); track loan.id) {
+
+      <div class="card flex flex-col md:flex-row items-start md:items-center gap-5 hover:shadow-md transition-shadow">
+
+        <!-- Image -->
+        <div class="w-28 h-40 shrink-0 overflow-hidden rounded-lg border border-gray-200">
+          <img src="/images/livre-exemple.jpg" alt="Couverture du livre" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Informations -->
+        <div class="flex-1 flex flex-col gap-2">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+
+              <h2 class="text-xl font-semibold">
+                {{ loan.book.title }}
+              </h2>
+
+              @for (author of loan.book.authors; track author.id) {
+                <p class="text-sm text-gray-500">
+                  {{ author.fname }} {{ author.lname }}
+                </p>
+              }
+
+              <div class="mt-2 flex items-center gap-2">
+
+                <span class="text-sm text-gray-500">
+                  Statut :
+                </span>
+
+                <span
+                  class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+
+                  [class.bg-green-100]="loan.status === 'IN_PROGRESS'"
+                  [class.text-green-700]="loan.status === 'IN_PROGRESS'"
+
+                  [class.bg-gray-200]="loan.status === 'RETURNED'"
+                  [class.text-gray-700]="loan.status === 'RETURNED'">
+
+                  {{ LoanStatusLabel[loan.status] }}
+
+                </span>
+
+              </div>
+
+            </div>
+
+            @for (category of loan.book.categories; track category.id) {
+              <span class="badge-dark">
+                {{ category.name }}
+              </span>
+            }
+
+          </div>
+
+          <p class="text-sm text-gray-600">
+            Emprunt effectué le
+            <strong>{{ loan.loanDate | date:'dd/MM/yyyy HH:mm' }}</strong>
+          </p>
+
+          <p class="text-sm text-gray-600">
+            Retour prévu le
+            <strong>{{ loan.expectedReturnDate | date:'dd/MM/yyyy HH:mm' }}</strong>
+          </p>
+
+          @if (loan.actualReturnDate) {
+            <p class="text-sm text-gray-600">
+              Retourné le
+              <strong>{{ loan.actualReturnDate | date:'dd/MM/yyyy HH:mm' }}</strong>
+            </p>
+          }
+
+          @if (loan.delay > 0) {
+            <p class="text-sm font-semibold text-red-600">
+              ⚠ En retard de {{ loan.delay }} jour(s)
+            </p>
+          }
+
+          <div class="flex flex-wrap gap-2 mt-3">
+            <a [routerLink]="['/catalog', loan.book.id]" class="btn-primary">Voir le livre</a>
+          </div>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+} @else {
+
+  <div class="text-center py-10 text-gray-500">
+    <p>Vous n'avez actuellement aucun emprunt.</p>
+  </div>
+
+}
