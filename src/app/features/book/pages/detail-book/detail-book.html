@@ -20,21 +20,23 @@
       <!-- Image principale -->
       <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
         <img
-          [src]="bookSelected()?.images?.[0]?.path ? getImageUrl(bookSelected()!.images[0].path) : 'https://placehold.co/350x500'"
-          [alt]="bookSelected()?.images?.[0]?.name ?? 'Le livre n\'a pas d\'image disponible.'"
+          [src]="mainImage() ? getImageUrl(mainImage()!.path) : '/images/livre-exemple.jpg'"
+          [alt]="mainImage()?.name ?? 'Le livre n\'a pas d\'image disponible.'"
           class="w-full aspect-[3/4] object-cover">
       </div>
 
       <!-- Galerie -->
       <div class="grid grid-cols-4 gap-2 mt-3">
-
         @if (bookSelected()?.images) {
           @for (bo of bookSelected()?.images; track bo.id) {
             <button
-              class="overflow-hidden rounded-lg border-2 border-[var(--color-terracotta)]">
+              (click)="selectImage(bo)"
+              class="overflow-hidden rounded-lg border-2"
+              [class.border-[var(--color-terracotta)]]="mainImage()?.id === bo.id"
+              [class.border-gray-200]="mainImage()?.id !== bo.id">
               <img
-                [src]="bookSelected()?.images?.[0]?.path ? getImageUrl(bookSelected()!.images[0].path) : 'https://placehold.co/350x500'"
-                [alt]="bookSelected()?.images?.[0]?.name ?? 'Le livre n\'a pas d\'image disponible.'"
+                [src]="bo.path ? getImageUrl(bo.path) : '/images/livre-exemple.jpg' "
+                [alt]="bo.name ?? 'Le livre n\'a pas d\'image disponible.'"
                 class="w-full aspect-[3/4] object-cover">
             </button>
           }
@@ -47,12 +49,12 @@
 
       <div class="flex flex-wrap items-center gap-3 mb-4">
         @if (bookSelected()?.available) {
-          <span class="badge-dark"> Disponible </span>
+          <span class="badge-dark text-base px-4 py-2"> Disponible </span>
         } @else {
-          <span class="badge-dark"> Non disponible </span>
+          <span class="badge-dark text-base px-4 py-2"> Non disponible </span>
         }
-        <span class="badge-soft">ISBN : {{ bookSelected()?.isbn }}</span>
-        <span class="badge-info">Langue : {{ bookSelected()?.language }} </span>
+        <span class="badge-soft text-base px-4 py-2">ISBN : {{ bookSelected()?.isbn }}</span>
+        <span class="badge-info text-base px-4 py-2">Langue : {{ bookSelected()?.language }}</span>
       </div>
 
       <h2 class="text-3xl font-semibold text-[var(--color-primary)]">{{ bookSelected()?.title }}</h2>
@@ -236,7 +238,7 @@
                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
               } @else {
                 <img
-                  src="https://placehold.co/300x300"
+                  src="/images/livre-exemple.jpg"
                   alt="Pas de couverture"
                   class="w-full h-full object-cover">
               }
@@ -274,7 +276,7 @@
                   class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"/>
               } @else {
                 <img
-                  src="https://placehold.co/300x300"
+                  src="/images/livre-exemple.jpg"
                   alt="Aucune couverture"
                   class="w-full h-full object-cover"/>
               }

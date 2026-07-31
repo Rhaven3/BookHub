@@ -11,10 +11,12 @@ import { Editor } from '../../../editor/editor.interface';
 import { LoanService } from '../../../loan/services/loan';
 import { ImageService } from '../../../image/service/image-service';
 import { RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { FlashMessageService } from '../../../../core/services/flashMessage/flash-message-service';
 
 @Component({
   selector: 'app-catalog',
-  imports: [BookFilter, RouterLink],
+  imports: [BookFilter, RouterLink, NgClass],
   templateUrl: './catalog.html',
   styleUrl: './catalog.css',
 })
@@ -24,6 +26,7 @@ export class Catalog {
   private categoryService = inject(CategoryService);
   private editorService = inject(EditorService);
   private imageService = inject(ImageService);
+  private flashMessage = inject(FlashMessageService);
 
   books = signal<Book[]>([]);
 
@@ -91,7 +94,7 @@ export class Catalog {
   borrow(book: Book): void {
     this.loanService.createLoan(book.id).subscribe({
       next: () => {
-        console.log('Livre emprunté avec succès');
+        this.flashMessage.success('Livre emprunté avec succès');
 
         // mettre à jour le signal
         this.books.update((books) =>
@@ -99,13 +102,13 @@ export class Catalog {
         );
       },
       error: (err) => {
-        console.error('Erreur lors de l’emprunt', err);
+        this.flashMessage.error('Erreur lors de l’emprunt');
       },
     });
   }
 
   reserve(book: Book): void {
-    console.log('Réservation demandée', book.id);
+    this.flashMessage.success('Réservation demandée');
     // appel ReservationService
   }
 

@@ -8,23 +8,24 @@
     <div class="dashboard-table-header dashboard-table-header--books">
       <span>Image</span>
       <span>Titre</span>
-      <span>Auteur</span>
+      <span>ISBN</span>
       <span>Action</span>
     </div>
+    @for (book of books().slice(0, 3); track book.id) {
+      <div class="dashboard-table-row dashboard-table-row--books">
+        <span class="flex items-center justify-center w-16 h-16 overflow-hidden rounded-lg border border-gray-200 bg-gray-100 shrink-0">
+          <img
+            [src]="book.images[0] ? getImageUrl(book.images[0].path) : '/images/livre-exemple.jpg'"
+            [alt]="book.images[0]?.name ?? 'Image du livre'"
+            class="w-full h-full object-cover">
+        </span>
+        <span class="truncate font-medium">{{ book.title }}</span>
+        <span class="truncate text-gray-500">{{ book.isbn }}</span>
 
-    <!-- FAKE DATA — à remplacer par une boucle @for sur les vrais livres -->
-    <div class="dashboard-table-row dashboard-table-row--books">
-      <span class="dashboard-table-thumb"></span>
-      <span>Les Misérables</span>
-      <span>Victor Hugo</span>
-      <a routerLink="/books/1" class="btn-link">Voir</a>
-    </div>
-
-    <div class="dashboard-table-row dashboard-table-row--books">
-      <span class="dashboard-table-thumb"></span>
-      <span>1984</span>
-      <span>George Orwell</span>
-      <a routerLink="/books/2" class="btn-link">Voir</a>
-    </div>
+        <a [routerLink]="['/catalogue/book', book.id]" class="btn-link justify-self-end">
+          Voir
+        </a>
+      </div>
+    }
   </div>
 </div>

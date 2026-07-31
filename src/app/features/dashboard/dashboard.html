@@ -3,12 +3,12 @@
     <h1 class="section-title">Dashboard Biblio</h1>
   </div>
 
-  <app-kpi-bar />
+  <app-kpi-bar [totalBooks]="totalBooks()" />
 
   <app-quick-actions />
   <app-user-management />
   <app-delay-tracker />
-  <app-book-list-preview />
+  <app-book-list-preview [books]="allBooks().content" />
 
-  <app-recent-loans />
+  <app-recent-loans  />
 </section>
