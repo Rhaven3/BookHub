@@ -1,0 +1,14 @@
+<section class="profile-page">
+  <div class="profile-header">
+    <h1 class="profile-title">Modifier mes informations</h1>
+  </div>
+
+  <div class="profile-card">
+    <app-edit-form
+      [initialValue]="user()"
+      [loading]="loading()"
+      [errorMessage]="errorMessage()"
+      (submitForm)="onSubmit($event)"
+    />
+  </div>
+</section>

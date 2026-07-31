@@ -1,0 +1,79 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container" novalidate>
+
+<div class="grid grid-cols-2 gap-4">
+    <app-form-input
+      formControlName="firstName"
+      label="Prénom"
+      filter="letters"
+      autocomplete="given-name"
+      requiredMessage="Le prénom est requis."
+      patternMessage="Le prénom ne doit contenir que des lettres."
+    />
+    <app-form-input
+      formControlName="lastName"
+      label="Nom"
+      filter="letters"
+      autocomplete="family-name"
+      requiredMessage="Le nom est requis."
+      patternMessage="Le nom ne doit contenir que des lettres."
+    />
+  </div>
+
+  <app-form-input
+    formControlName="email"
+    label="Email"
+    type="email"
+    placeholder="vous@exemple.com"
+    autocomplete="email"
+    requiredMessage="L'email est requis."
+    patternMessage="Entrez une adresse email valide."
+  />
+
+  <app-form-input
+    formControlName="password"
+    label="Mot de passe"
+    type="password"
+    placeholder="••••••••"
+    autocomplete="new-password"
+    requiredMessage="Le mot de passe est requis."
+    patternMessage="6 caractères minimum."
+  />
+
+  <app-form-input
+    formControlName="phone"
+    label="Téléphone"
+    type="tel"
+    filter="numbers"
+    autocomplete="tel"
+    [maxLength]="10"
+    requiredMessage="Le téléphone est requis."
+    patternMessage="Le téléphone doit contenir exactement 10 chiffres."
+  />
+
+  <div formGroupName="address" class="form-container">
+    <app-address-autocomplete
+      formControlName="street"
+      label="Adresse"
+      requiredMessage="L'adresse est requise."
+      (addressSelected)="onAddressSelected($event)"
+    />
+    <div class="grid grid-cols-2 gap-4">
+      <app-form-input formControlName="postalCode" label="Code postal" filter="numbers" [maxLength]="5" autocomplete="postal-code"
+                      requiredMessage="Requis." patternMessage="Doit contenir 5 chiffres." />
+      <app-form-input formControlName="city" label="Ville" filter="letters" autocomplete="address-level2"
+                      requiredMessage="Requis." patternMessage="La ville ne doit contenir que des lettres." />
+    </div>
+
+    <app-form-input formControlName="country" label="Pays" filter="letters" autocomplete="country-name"
+                    requiredMessage="Le pays est requis." patternMessage="Le pays ne doit contenir que des lettres." />
+  </div>
+
+  <button type="submit" class="btn-primary" [disabled]="loading()">
+    {{ loading() ? 'Création...' : 'Créer mon compte' }}
+  </button>
+
+  <p class="text-center text-sm text-gray-500">
+    Déjà un compte ?
+    <a routerLink="/auth/login" class="auth-link">Se connecter</a>
+  </p>
+</form>

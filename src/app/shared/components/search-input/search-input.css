@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.search-input-wrapper {
+  @apply w-1/2 relative flex items-center bg-white;
+}
+
+.search-input-icon {
+  @apply absolute left-3 text-sm pointer-events-none;
+  opacity: 0.5;
+}
+
+.search-input-field {
+  @apply w-full text-sm rounded-lg border pl-9 pr-9 py-2.5;
+  border-color: #E5DFD3;
+  color: var(--color-primary);
+}
+
+.search-input-field:focus {
+  @apply outline-none;
+  border-color: var(--color-clay);
+}
+
+.search-input-clear {
+  @apply absolute right-3 text-xs cursor-pointer;
+  color: var(--color-clay);
+}
+
+.search-input-clear:hover {
+  color: var(--color-primary);
+}
+

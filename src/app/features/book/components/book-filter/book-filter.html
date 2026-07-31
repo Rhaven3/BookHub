@@ -1,0 +1,72 @@
+<section class="book-filter">
+
+  <div class="filters-grid">
+
+    <div class="filter">
+      <label class="form-label">Recherche</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Titre, auteur, catégorie, ISBN..."
+        [(ngModel)]="searchWord"
+        (input)="onFilterChange()"
+      />
+    </div>
+
+    <div class="filter">
+      <label class="form-label">Auteur</label>
+      <select
+        class="form-select"
+        [(ngModel)]="selectedAuthor"
+        (change)="onFilterChange()">
+
+        <option [ngValue]="null">Tous les auteurs</option>
+
+        @for (author of authors; track author.id) {
+          <option [ngValue]="author.id">
+            {{ author.firstName }} {{ author.lastName }}
+          </option>
+        }
+
+      </select>
+    </div>
+
+    <div class="filter">
+      <label class="form-label">Catégorie</label>
+      <select
+        class="form-select"
+        [(ngModel)]="selectedCategory"
+        (change)="onFilterChange()">
+
+        <option [ngValue]="null">Toutes les catégories</option>
+
+        @for (category of categories; track category.id) {
+          <option [ngValue]="category.id">
+            {{ category.name }}
+          </option>
+        }
+
+      </select>
+    </div>
+
+    <div class="filter">
+      <label class="form-label">Éditeur</label>
+      <select
+        class="form-select"
+        [(ngModel)]="selectedEditor"
+        (change)="onFilterChange()">
+
+        <option [ngValue]="null">Tous les éditeurs</option>
+
+        @for (editor of editors; track editor.id) {
+          <option [ngValue]="editor.id">
+            {{ editor.name }}
+          </option>
+        }
+
+      </select>
+    </div>
+
+  </div>
+
+</section>

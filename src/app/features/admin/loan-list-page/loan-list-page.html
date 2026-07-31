@@ -1,0 +1,49 @@
+<section class="section-page-admin">
+
+  <div class="section-header">
+    <div class="flex flex-col">
+      <a routerLink="/dashboard" class="dashboard-back-link">
+        ← Retour au dashboard
+      </a>
+      <h1 class="section-title">Gestion des emprunts</h1>
+    </div>
+  </div>
+
+  <div class="flex justify-between w-full">
+    <app-search-input
+      placeholder="Rechercher un emprunt..."
+      (searchChange)="searchTerm.set($event)"
+    />
+  </div>
+
+  @if (errorMessage()) {
+    <p class="form-alert">{{ errorMessage() }}</p>
+  }
+
+  <div class="dashboard-card">
+    <app-data-table [data]="loans()" [columns]="columns" [trackBy]="trackByLoanId" [searchTerm]="searchTerm()">
+      <ng-template appColumn="bookTitle" let-loan>{{ loan.bookTitle }}</ng-template>
+      <ng-template appColumn="userName" let-loan>{{ loan.userName }}</ng-template>
+      <ng-template appColumn="loanDate" let-loan>{{ loan.loanDate }}</ng-template>
+      <ng-template appColumn="expectedReturnDate" let-loan>{{ loan.expectedReturnDate }}</ng-template>
+
+      <ng-template appColumn="status" let-loan>
+        @if (loan.actualReturnDate) {
+          <span class="badge-soft">Rendu</span>
+        } @else if (loan.delay > 0) {
+          <span class="badge-dark">En retard ({{ loan.delay }}j)</span>
+        } @else {
+          <span class="badge-info">En cours</span>
+        }
+      </ng-template>
+
+      <ng-template appColumn="actions" let-loan>
+        <div class="flex items-center justify-between">
+          @if (!loan.actualReturnDate) {
+            <button type="button" class="btn-link" (click)="onMarkReturned(loan)">Marquer rendu</button>
+          }
+        </div>
+      </ng-template>
+    </app-data-table>
+  </div>
+</section>

@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container" novalidate>
+
+  <div class="grid grid-cols-2 gap-4">
+    <app-form-input
+      formControlName="firstName"
+      label="Prénom"
+      filter="letters"
+      autocomplete="given-name"
+      requiredMessage="Le prénom est requis."
+      patternMessage="Le prénom ne doit contenir que des lettres."
+    />
+    <app-form-input
+      formControlName="lastName"
+      label="Nom"
+      filter="letters"
+      autocomplete="family-name"
+      requiredMessage="Le nom est requis."
+      patternMessage="Le nom ne doit contenir que des lettres."
+    />
+  </div>
+
+  <app-form-input
+    formControlName="email"
+    label="Email"
+    type="email"
+    placeholder="vous@exemple.com"
+    autocomplete="email"
+    requiredMessage="L'email est requis."
+    patternMessage="Entrez une adresse email valide."
+  />
+
+  <app-form-input
+    formControlName="phone"
+    label="Téléphone"
+    type="tel"
+    filter="numbers"
+    autocomplete="tel"
+    [maxLength]="10"
+    requiredMessage="Le téléphone est requis."
+    patternMessage="Le téléphone ne doit contenir que des chiffres."
+  />
+
+  <div formGroupName="address" class="form-container">
+    <app-form-input formControlName="street" label="Adresse" autocomplete="street-address" requiredMessage="L'adresse est requise." />
+
+    <div class="grid grid-cols-2 gap-4">
+      <app-form-input formControlName="postalCode" label="Code postal" filter="numbers" autocomplete="postal-code" requiredMessage="Requis." />
+      <app-form-input formControlName="city" label="Ville" filter="letters" autocomplete="address-level2" requiredMessage="Requis." />
+    </div>
+
+    <app-form-input formControlName="country" label="Pays" filter="letters" autocomplete="country-name" requiredMessage="Le pays est requis." />
+  </div>
+
+  <div class="flex items-center gap-3 justify-end">
+    @if (cancelRoute()) {
+      <a [routerLink]="cancelRoute()" class="btn-secondary no-underline">Annuler</a>
+    } @else {
+      <button type="button" class="btn-secondary" (click)="onCancel()">Annuler</button>
+    }
+    <button type="submit" class="btn-primary" [disabled]="loading()">
+      {{ loading() ? 'Enregistrement...' : 'Enregistrer les modifications' }}
+    </button>
+  </div>
+</form>

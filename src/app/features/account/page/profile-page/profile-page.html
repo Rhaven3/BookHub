@@ -1,0 +1,104 @@
+<section class="profile-page">
+
+  <div class="profile-header">
+    <h1 class="profile-title">Mon profil</h1>
+    <div class="profile-header-actions">
+      <a href="/account/change-password" class="btn-link">Modifier mon mot de passe</a>
+      <a href="/account/edit" class="btn-secondary">Modifier mes informations</a>
+    </div>
+  </div>
+
+  <!-- INFOS UTILISATEUR -->
+  <div class="profile-card">
+    <h2 class="profile-card-title">Informations personnelles</h2>
+
+    <div class="profile-info-grid">
+      <div class="profile-info-item">
+        <span class="profile-info-label">Prénom</span>
+        <span class="profile-info-value">{{ user()?.firstName }}</span>
+      </div>
+
+      <div class="profile-info-item">
+        <span class="profile-info-label">Nom</span>
+        <span class="profile-info-value">{{ user()?.lastName }}</span>
+      </div>
+
+      <div class="profile-info-item">
+        <span class="profile-info-label">Email</span>
+        <span class="profile-info-value">{{ user()?.email }}</span>
+      </div>
+
+      <div class="profile-info-item">
+        <span class="profile-info-label">Téléphone</span>
+        <span class="profile-info-value">{{ user()?.phone }}</span>
+      </div>
+    </div>
+
+    <div class="profile-info-address">
+      <span class="profile-info-label">Adresse</span>
+      <p class="profile-info-value">
+        {{ user()?.addressDTO?.street }}<br>
+        {{ user()?.addressDTO?.postalCode }} {{ user()?.addressDTO?.city }}<br>
+        {{ user()?.addressDTO?.country }}
+      </p>
+    </div>
+  </div>
+
+  <!-- EMPRUNTS EN COURS -->
+  <div class="profile-card">
+    <div class="profile-card-header">
+      <h2 class="profile-card-title">Emprunts en cours</h2>
+      <a routerLink="/emprunts" class="btn-link">Tout voir</a>
+    </div>
+
+    <div class="profile-list">
+      <!-- FAKE DATA — à remplacer par une boucle @for sur les vrais emprunts -->
+      <div class="profile-list-item">
+        <div>
+          <a class="profile-list-item-title" href="/books/1">Les Misérables</a>
+          <p class="profile-list-item-subtitle">Victor Hugo</p>
+        </div>
+        <span class="badge-soft">À rendre le 15/08</span>
+      </div>
+
+      <div class="profile-list-item">
+        <div>
+          <a class="profile-list-item-title" href="/books/2">1984</a>
+          <p class="profile-list-item-subtitle">George Orwell</p>
+        </div>
+        <span class="badge-dark">En retard</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RÉSERVATIONS EN COURS -->
+  <div class="profile-card">
+    <div class="profile-card-header">
+      <h2 class="profile-card-title">Réservations en cours</h2>
+      @if (reservations().length > 0) {
+        <a routerLink="/reservations" class="btn-link">Tout voir</a>
+      }
+    </div>
+    @if (reservations().length > 0) {
+      @for (reservation of reservations(); track reservation.id;) {
+        <div class="profile-list">
+          <!-- FAKE DATA — à remplacer par une boucle @for sur les vraies réservations -->
+          <div class="profile-list-item">
+            <div>
+              <a class="profile-list-item-title" >{{ reservation.book.title }}</a>
+              @for ( res of reservation.book.authors ; track res.id) {
+                <p class="profile-list-item-subtitle">{{ res.lastName }} {{ res.firstName }}</p>
+              }
+            </div>
+            <span class="badge-soft">{{ reservation.registrationDate | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="profile-list">
+        <p>Aucune réservation en cours.</p>
+      </div>
+    }
+  </div>
+
+</section>

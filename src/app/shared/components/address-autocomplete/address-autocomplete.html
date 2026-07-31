@@ -1,0 +1,39 @@
+<div class="form-field address-autocomplete">
+  @if (label) {
+    <label class="form-label" [attr.for]="label">{{ label }}</label>
+  }
+
+  <div class="address-autocomplete-wrapper">
+    <input
+      [id]="label"
+      type="text"
+      [placeholder]="placeholder"
+      [autocomplete]="autocomplete"
+      [value]="value"
+      [disabled]="disabled"
+      class="form-input"
+      [class.form-input-error]="invalid"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+
+    @if (isLoading()) {
+      <span class="address-autocomplete-spinner"></span>
+    }
+
+    @if (isOpen() && suggestions().length > 0) {
+      <ul class="address-autocomplete-dropdown">
+        @for (suggestion of suggestions(); track suggestion.label) {
+          <li class="address-autocomplete-item" (click)="selectSuggestion(suggestion)">
+            {{ suggestion.label }}
+          </li>
+        }
+      </ul>
+    }
+  </div>
+  <span class="form-error-text">@if (invalid) {
+    {{ requiredMessage }}
+  }</span>
+
+</div>

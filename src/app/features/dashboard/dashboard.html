@@ -1,0 +1,14 @@
+<section class="section-page">
+  <div class="section-header">
+    <h1 class="section-title">Dashboard Biblio</h1>
+  </div>
+
+  <app-kpi-bar [totalBooks]="totalBooks()" />
+
+  <app-quick-actions />
+  <app-user-management />
+  <app-delay-tracker />
+  <app-book-list-preview [books]="allBooks().content" />
+
+  <app-recent-loans  />
+</section>

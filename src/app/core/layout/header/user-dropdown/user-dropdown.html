@@ -1,0 +1,50 @@
+<div class="userDropdown group">
+  <div class="userTrigger">
+    <span>{{ user()?.firstName }}</span>
+  </div>
+
+  <div class="userMenu">
+    <div class="userMenuHeader">
+      <p class="userMenuName">
+        {{ user()?.firstName }} {{ user()?.lastName }}
+      </p>
+      <p class="userMenuEmail">
+        {{ user()?.email }}
+      </p>
+    </div>
+
+    <div class="userMenuSection">
+      <a routerLink="/account" class="userMenuItem flex items-center gap-2">
+        Profil
+      </a>
+      @if (user()?.role === 'ADMIN') {
+        <a routerLink="/dashboard" class="userMenuItem flex items-center gap-2">Dashboard</a>
+      }
+      <a routerLink="/loans" class="userMenuItem flex items-center gap-2">
+        Mes emprunts
+      </a>
+      <a routerLink="/reservations" class="userMenuItem flex items-center gap-2">
+        Mes réservations
+      </a>
+    </div>
+
+    <div class="userMenuDivider"></div>
+
+    <button
+      type="button"
+      class="userMenuItem userMenuDanger flex items-center gap-2 w-full text-left" (click)="logout.emit()">
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <path d="M17 16l4-4m0 0l-4-4m4 4H7" />
+        <path d="M3 21V3" />
+      </svg>
+
+      Déconnexion
+    </button>
+  </div>
+</div>

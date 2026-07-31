@@ -1,0 +1,19 @@
+<header class="app-header">
+  <a routerLink="" class="app-header-brand">BookHub</a>
+
+  <nav class="app-header-nav">
+    @if (isAuthenticated()) {
+      <a routerLink="/loans" class="btn-secondary">Mes emprunts</a>
+      <a routerLink="/reservations" class="btn-secondary">Mes réservations</a>
+      @if (user()?.role === 'ADMIN') {
+        <a routerLink="/dashboard" class="btn-secondary">Dashboard</a>
+      }
+
+      <app-notification/>
+      <app-user-dropdown [user]="user()" (logout)="logout()"></app-user-dropdown>
+    } @else {
+      <a routerLink="/auth/login" class="app-header-link">Connexion</a>
+      <a routerLink="/auth/register" class="app-header-link">Inscription</a>
+    }
+  </nav>
+</header>

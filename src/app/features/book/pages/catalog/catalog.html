@@ -1,0 +1,68 @@
+<section class="section-page-admin">
+
+  <h1 class="text-3xl font-bold mb-6">Catalogue des livres</h1>
+
+  <!-- Filtres -->
+  <app-book-filter [authors]="authors()" [categories]="categories()" [editors]="editors()" (filterChange)="filterBooks($event)"></app-book-filter>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (book of books(); track book.id) {
+      <article class="group flex flex-col justify-between overflow-hidden bg-white rounded-xl border border-[#E5DFD3] shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+
+        <a [routerLink]="['book/', book.id]" class="flex flex-col flex-1 text-inherit no-underline">
+          <!-- Conteneur image compact -->
+          <div class="relative h-44 w-full overflow-hidden bg-[var(--color-sand)]">
+            <img
+              [src]="book.images[0] ? getImageUrl(book.images[0].path) : '/images/livre-exemple.jpg'"
+              [alt]="book.images[0]?.name ?? 'Image du livre'"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <!-- Badge de disponibilité -->
+            <span
+              class="absolute top-2.5 right-2.5 text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-md"
+              [ngClass]="book.available ? 'bg-emerald-600/90 text-white' : 'bg-[var(--color-primary)]/80 text-[var(--color-sand)]'"
+            >
+            {{ book.available ? 'Disponible' : 'Emprunté' }}
+          </span>
+          </div>
+
+          <!-- Informations du livre -->
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <h2 class="text-base font-bold text-[var(--color-primary)] line-clamp-2 leading-snug group-hover:text-[var(--color-terracotta)] transition-colors">
+                {{ book.title }}
+              </h2>
+
+              <p class="mt-1.5 text-sm text-[var(--color-clay)] font-medium line-clamp-1">
+                @for (author of book.authors; track author.id; let last = $last) {
+                  {{ author.firstName }} {{ author.lastName }}@if (!last) {, }
+                }
+              </p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Boutons d'action réutilisant tes classes globales -->
+        <div class="p-4 pt-0">
+          @if (book.available) {
+            <button
+              (click)="borrow(book)"
+              class="btn-primary w-full"
+            >
+              Emprunter
+            </button>
+          } @else {
+            <button
+              (click)="reserve(book)"
+              class="btn-secondary w-full"
+            >
+              Réserver
+            </button>
+          }
+        </div>
+
+      </article>
+    }
+  </div>
+
+</section>

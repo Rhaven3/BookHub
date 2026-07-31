@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container" novalidate>
+  @if (errorMessage) {
+    <p class="form-alert">{{ errorMessage }}</p>
+  }
+
+    <app-form-input
+      formControlName="email"
+      label="Email"
+      type="email"
+      placeholder="vous@exemple.com"
+      autocomplete="email"
+      requiredMessage="L'email est requis."
+      patternMessage="Entrez une adresse email valide."
+    />
+    <app-form-input
+      label="Mot de passe"
+      formControlName="password"
+      type="password"
+      placeholder="••••••••"
+      autocomplete="current-password"
+      requiredMessage="Le mot de passe est requis."
+      patternMessage="Le mot de passe doit contenir au moins 8 caractères."
+    />
+
+  <button type="submit" class="btn-primary" [disabled]="loading">
+    {{ loading ? 'Connexion...' : 'Se connecter' }}
+  </button>
+
+  <p class="text-center text-sm text-[var(--color-slate)]">
+    Pas encore de compte ?
+    <a routerLink="/auth/register" class="auth-link">Créer un compte</a>
+  </p>
+</form>

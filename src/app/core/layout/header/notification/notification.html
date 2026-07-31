@@ -1,0 +1,37 @@
+<div class="userDropdown group">
+  <div class="userTrigger">
+    🔔
+    @if (unreadCount > 0) {
+      <span class="badge">{{ unreadCount }}</span>
+    }
+  </div>
+
+  <div class="notificationMenu">
+    <div class="userMenuSection">
+      @for (notif of (notifications$ | async); track notif.id) {
+        <div
+          class="userMenuItem"
+          [class.unread]="!notif.isRead"
+          (click)="onNotificationClick(notif)"
+        >
+          <div class="notifContent">
+            <p>{{ notif.message }}</p>
+            <small>{{ notif.date | date:'short' }}</small>
+          </div>
+          <button
+            class="notifDeleteBtn"
+            (click)="onDeleteClick($event, notif)"
+            aria-label="Supprimer la notification"
+          >
+            ✕
+          </button>
+        </div>
+      }
+      @if ((notifications$ | async)?.length === 0) {
+        <p class="userMenuEmpty">Aucune notification</p>
+      }
+    </div>
+
+    <div class="userMenuDivider"></div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<section class="section-page">
+  <div class="section-header">
+    <div class="flex flex-col">
+      <a routerLink="/dashboard" class="dashboard-back-link">
+        ← Retour au dashboard
+      </a>
+      <h1 class="section-title">Ajouter un livre </h1>
+    </div>
+  </div>
+  <div class="dashboard-card">
+    <app-book-form [cancelRoute]="'/dashboard/books'" />
+  </div>
+</section>
